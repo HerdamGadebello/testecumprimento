@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de Francês</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #296CA6;
@@ -12,93 +13,156 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
         }
         .logo {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 30px;
+            left: 30px;
+            width: 150px; /* Increased logo size */
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.1);
         }
         .container {
             background-color: #F5F1E7;
-            border-radius: 20px;
-            width: 600px;
-            min-height: 400px;
-            padding: 20px;
+            border-radius: 25px;
+            width: 650px;
+            min-height: 450px;
+            padding: 30px;
             position: relative;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
         }
         .prompt {
             background-color: #BF2121;
             color: white;
             font-family: 'Rockwell', serif;
-            font-size: 18px;
-            padding: 10px;
-            border-radius: 50px;
-            width: 80%;
+            font-size: 20px;
+            padding: 15px;
+            border-radius: 75px;
+            width: 90%; /* Larger prompt */
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .prompt:hover {
+            background-color: #a31b1b;
         }
         .word {
             font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;
-            font-size: 24px;
+            font-size: 28px;
             color: black;
-            margin: 40px 0 20px;
+            margin: 50px 0 25px;
+            transition: opacity 0.5s ease;
         }
         .options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 25px;
         }
         .option {
             background-color: #fff;
             border: 2px solid #ccc;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 12px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-family: 'Rockwell', serif; /* Rockwell for options */
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .option:hover {
-            background-color: #e0e0e0;
+            background-color: #e8e8e8;
+            transform: translateY(-2px);
         }
         .feedback {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 20px 0;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: 'Lora', serif; /* Lora for feedback */
+            margin: 25px 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .feedback.show {
+            opacity: 1;
         }
         .controls {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .controls button {
             background-color: #BF2121;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .controls button:hover {
+            background-color: #a31b1b;
+            transform: scale(1.05);
         }
         .controls button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
         .audio-controls {
-            margin: 10px 0;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .audio-controls select {
+            padding: 5px;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
         }
         .result {
             font-size: 18px;
-            margin: 20px 0;
+            font-family: 'Lora', serif; /* Lora for result */
+            margin: 25px 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .result.show {
+            opacity: 1;
+        }
+        .result button {
+            background-color: #BF2121;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .result button:hover {
+            background-color: #a31b1b;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <img src="LOGODAMIAO.png" alt="Logo" class="logo" width="100">
+    <img src="LOGODAMIAO.png" alt="Logo" class="logo" width="150">
     <div class="container">
         <div class="prompt">Escolha a alternativa que melhor traduz a seguinte palavra:</div>
         <div class="audio-controls">
@@ -165,7 +229,9 @@
             wordDisplay.textContent = q.word;
             optionsContainer.innerHTML = '';
             feedback.textContent = '';
+            feedback.classList.remove('show');
             result.innerHTML = '';
+            result.classList.remove('show');
             answered = false;
 
             q.options.forEach(option => {
@@ -186,7 +252,8 @@
             const q = questions[currentQuestion];
             const isCorrect = selected === q.answer;
             feedback.textContent = isCorrect ? 'CORRETO' : 'INCORRETO';
-            feedback.style.color = isCorrect ? 'green' : 'red';
+            feedback.style.color = isCorrect ? '#2ecc71' : '#e74c3c';
+            feedback.classList.add('show');
 
             const audio = new Audio(isCorrect ? 'WIN.wav' : 'ERROR.wav');
             audio.play();
@@ -209,6 +276,7 @@
                 <div>${message}</div>
                 <button onclick="resetQuiz()">REFAZER</button>
             `;
+            result.classList.add('show');
             optionsContainer.innerHTML = '';
             wordDisplay.textContent = '';
             audio.src = '';
