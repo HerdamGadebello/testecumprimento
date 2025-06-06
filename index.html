@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #296CA6;
+            background: linear-gradient(135deg, #296CA6 0%, #1b4d7e 100%); /* Gradient background for depth */
             margin: 0;
             display: flex;
             justify-content: center;
@@ -18,9 +18,9 @@
         }
         .logo {
             position: absolute;
-            top: 30px;
-            left: 30px;
-            width: 150px; /* Increased logo size */
+            top: 40px;
+            left: 40px;
+            width: 200px;
             transition: transform 0.3s ease;
         }
         .logo:hover {
@@ -28,68 +28,82 @@
         }
         .container {
             background-color: #F5F1E7;
-            border-radius: 25px;
-            width: 650px;
-            min-height: 450px;
-            padding: 30px;
+            border-radius: 30px;
+            width: 700px;
+            min-height: 500px;
+            padding: 40px;
             position: relative;
             text-align: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
         }
         .prompt {
             background-color: #BF2121;
             color: white;
             font-family: 'Rockwell', serif;
-            font-size: 20px;
-            padding: 15px;
-            border-radius: 75px;
-            width: 90%; /* Larger prompt */
+            font-size: 24px;
+            padding: 20px 30px;
+            border-radius: 100px;
+            width: 95%;
             position: absolute;
-            top: -25px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         .prompt:hover {
             background-color: #a31b1b;
+            transform: translateX(-50%) translateY(-2px);
+        }
+        .prompt-text {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            display: inline-block;
         }
         .word {
             font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;
-            font-size: 28px;
+            font-size: 32px;
             color: black;
-            margin: 50px 0 25px;
+            margin: 60px 0 30px;
             transition: opacity 0.5s ease;
         }
         .options {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two-column layout for buttons */
             gap: 15px;
             margin-bottom: 25px;
         }
         .option {
-            background-color: #fff;
-            border: 2px solid #ccc;
+            background-color: #ffffff;
+            border: none;
             border-radius: 12px;
-            padding: 12px;
+            padding: 15px;
             cursor: pointer;
             font-size: 18px;
-            font-family: 'Rockwell', serif; /* Rockwell for options */
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-family: 'Rockwell', serif;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
         .option:hover {
-            background-color: #e8e8e8;
-            transform: translateY(-2px);
+            background-color: #f0f0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .option:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .feedback {
             font-size: 20px;
             font-weight: 500;
-            font-family: 'Lora', serif; /* Lora for feedback */
+            font-family: 'Lora', serif;
             margin: 25px 0;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -106,37 +120,47 @@
             background-color: #BF2121;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 30px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
             font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
         .controls button:hover {
             background-color: #a31b1b;
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .controls button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
         .audio-controls {
             margin: 15px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
         }
         .audio-controls select {
-            padding: 5px;
-            border-radius: 5px;
+            padding: 8px;
+            border-radius: 8px;
             font-family: 'Poppins', sans-serif;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+        .audio-controls select:focus {
+            border-color: #BF2121;
+            outline: none;
         }
         .result {
             font-size: 18px;
-            font-family: 'Lora', serif; /* Lora for result */
+            font-family: 'Lora', serif;
             margin: 25px 0;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -148,23 +172,25 @@
             background-color: #BF2121;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
         .result button:hover {
             background-color: #a31b1b;
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
 <body>
-    <img src="LOGODAMIAO.png" alt="Logo" class="logo" width="150">
+    <img src="LOGODAMIAO.png" alt="Logo" class="logo" width="200">
     <div class="container">
-        <div class="prompt">Escolha a alternativa que melhor traduz a seguinte palavra:</div>
+        <div class="prompt"><span class="prompt-text">Escolha a alternativa que melhor traduz a seguinte palavra:</span></div>
         <div class="audio-controls">
             <audio id="word-audio" controls>
                 <source src="" type="audio/mpeg">
@@ -223,6 +249,19 @@
         const prevButton = document.getElementById('prev');
         const nextButton = document.getElementById('next');
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function playButtonSound() {
+            const buttonAudio = new Audio('BUTTON.wav');
+            buttonAudio.play();
+        }
+
         function loadQuestion() {
             const q = questions[currentQuestion];
             audio.src = q.audio;
@@ -234,11 +273,16 @@
             result.classList.remove('show');
             answered = false;
 
-            q.options.forEach(option => {
-                const button = document.createElement('div');
+            // Shuffle options
+            const shuffledOptions = shuffleArray([...q.options]);
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
                 button.className = 'option';
                 button.textContent = option;
-                button.onclick = () => checkAnswer(option);
+                button.onclick = () => {
+                    playButtonSound();
+                    checkAnswer(option);
+                };
                 optionsContainer.appendChild(button);
             });
 
@@ -274,7 +318,7 @@
 
             result.innerHTML = `
                 <div>${message}</div>
-                <button onclick="resetQuiz()">REFAZER</button>
+                <button onclick="playButtonSound(); resetQuiz()">REFAZER</button>
             `;
             result.classList.add('show');
             optionsContainer.innerHTML = '';
@@ -293,6 +337,7 @@
 
         prevButton.onclick = () => {
             if (currentQuestion > 0) {
+                playButtonSound();
                 currentQuestion--;
                 loadQuestion();
             }
@@ -300,6 +345,7 @@
 
         nextButton.onclick = () => {
             if (!answered && currentQuestion < questions.length - 1) return;
+            playButtonSound();
             currentQuestion++;
             if (currentQuestion < questions.length) {
                 loadQuestion();
