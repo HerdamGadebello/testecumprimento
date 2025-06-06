@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Francês</title>
+    <style>
+        body {
+            background-color: #296CA6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .container {
+            background-color: #F5F1E7;
+            border-radius: 20px;
+            width: 600px;
+            min-height: 400px;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .prompt {
+            background-color: #BF2121;
+            color: white;
+            font-family: 'Rockwell', serif;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 50px;
+            width: 80%;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .word {
+            font-family: 'Franklin Gothic Heavy', 'Arial Black', sans-serif;
+            font-size: 24px;
+            color: black;
+            margin: 40px 0 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .option:hover {
+            background-color: #e0e0e0;
+        }
+        .feedback {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .controls button {
+            background-color: #BF2121;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .controls button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .audio-controls {
+            margin: 10px 0;
+        }
+        .result {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <img src="LOGODAMIAO.png" alt="Logo" class="logo" width="100">
+    <div class="container">
+        <div class="prompt">Escolha a alternativa que melhor traduz a seguinte palavra:</div>
+        <div class="audio-controls">
+            <audio id="word-audio" controls>
+                <source src="" type="audio/mpeg">
+            </audio>
+            <div>
+                <label for="playback-speed">Velocidade:</label>
+                <select id="playback-speed">
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+        </div>
+        <div class="word" id="word"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="result" id="result"></div>
+        <div class="controls">
+            <button id="prev" disabled>VOLTAR</button>
+            <button id="next">AVANÇAR</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { word: "Bonjour", answer: "Bom dia", options: ["Bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonjour.m4a" },
+            { word: "Salut", answer: "Olá", options: ["Olá", "Bom dia", "Obrigado(a)", "Por favor"], audio: "salut.mp3" },
+            { word: "Merci", answer: "Obrigado(a)", options: ["Obrigado(a)", "Por favor", "Desculpa", "De nada"], audio: "merci.mp3" },
+            { word: "Coucou", answer: "Oi, Oie, Oizinho", options: ["Oi, Oie, Oizinho", "Boa noite", "Até logo", "Bom dia"], audio: "coucou.mp3" },
+            { word: "S'il te plaît", answer: "Por favor (uso formal)", options: ["Por favor (uso formal)", "Por favor (uso informal)", "Obrigado(a)", "Desculpa"], audio: "s'il te plaît.mp3" },
+            { word: "S'il vous plaît", answer: "Por favor (uso informal)", options: ["Por favor (uso informal)", "Por favor (uso formal)", "De nada", "Até breve"], audio: "s'il vous plaît.mp3" },
+            { word: "Pardon", answer: "Perdão, Desculpa", options: ["Perdão, Desculpa", "Obrigado(a)", "Boa noite", "Oi"], audio: "pardon.mp3" },
+            { word: "De rien", answer: "De nada", options: ["De nada", "Por favor", "Olá", "Tchau"], audio: "de rien.mp3" },
+            { word: "À bientôt", answer: "Até breve, Até logo", options: ["Até breve, Até logo", "Boa noite", "Bom dia", "De nada"], audio: "à bientôt.mp3" },
+            { word: "Au revoir", answer: "Tchau, Nos vemos", options: ["Tchau, Nos vemos", "Bom dia", "Por favor", "Desculpa"], audio: "au revoir.mp3" },
+            { word: "Bonne nuit", answer: "Boa noite (despedida)", options: ["Boa noite (despedida)", "Boa noite (cumprimento)", "Bom dia", "Até logo"], audio: "bonne nuit.mp3" },
+            { word: "Bonne soirée", answer: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Boa noite (despedida)", "Bom dia", "Por favor"], audio: "bonne soirée.mp3" },
+            { word: "Bonsoir", answer: "Boa noite (cumprimento)", options: ["Boa noite (cumprimento)", "Boa noite (despedida)", "Olá", "De nada"], audio: "bonsoir.mp3" },
+            { word: "Bonne journée", answer: "Tenha um bom dia", options: ["Tenha um bom dia", "Bom dia", "Boa noite", "Tchau"], audio: "bonne journée.mp3" },
+            { word: "Bon après-midi", answer: "Boa tarde", options: ["Boa tarde", "Bom dia", "Boa noite", "Por favor"], audio: "bon après midi.mp3" },
+            { word: "Moi, c'est...", answer: "Eu sou (uso para se apresentar)", options: ["Eu sou (uso para se apresentar)", "Eu me chamo", "Obrigado(a)", "Desculpa"], audio: "moi c'est.mp3" },
+            { word: "Je m'appelle...", answer: "Eu me chamo", options: ["Eu me chamo", "Eu sou (uso para se apresentar)", "Por favor", "Olá"], audio: "je m'apelle.mp3" }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const audio = document.getElementById('word-audio');
+        const playbackSpeed = document.getElementById('playback-speed');
+        const wordDisplay = document.getElementById('word');
+        const optionsContainer = document.getElementById('options');
+        const feedback = document.getElementById('feedback');
+        const result = document.getElementById('result');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            audio.src = q.audio;
+            wordDisplay.textContent = q.word;
+            optionsContainer.innerHTML = '';
+            feedback.textContent = '';
+            result.innerHTML = '';
+            answered = false;
+
+            q.options.forEach(option => {
+                const button = document.createElement('div');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(button);
+            });
+
+            prevButton.disabled = currentQuestion === 0;
+            nextButton.textContent = currentQuestion === questions.length - 1 ? 'FINALIZAR' : 'AVANÇAR';
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+            const q = questions[currentQuestion];
+            const isCorrect = selected === q.answer;
+            feedback.textContent = isCorrect ? 'CORRETO' : 'INCORRETO';
+            feedback.style.color = isCorrect ? 'green' : 'red';
+
+            const audio = new Audio(isCorrect ? 'WIN.wav' : 'ERROR.wav');
+            audio.play();
+
+            if (isCorrect) score++;
+        }
+
+        function showResult() {
+            const percentage = (score / questions.length) * 100;
+            let message = `Você acertou ${score} de ${questions.length} palavras. `;
+            if (percentage > 95) {
+                message += 'Parabéns!';
+            } else if (percentage < 60) {
+                message += 'Não foi dessa vez.';
+            } else {
+                message += 'Resultado bom, mas precisa treinar mais.';
+            }
+
+            result.innerHTML = `
+                <div>${message}</div>
+                <button onclick="resetQuiz()">REFAZER</button>
+            `;
+            optionsContainer.innerHTML = '';
+            wordDisplay.textContent = '';
+            audio.src = '';
+            feedback.textContent = '';
+            prevButton.disabled = true;
+            nextButton.disabled = true;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        prevButton.onclick = () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        };
+
+        nextButton.onclick = () => {
+            if (!answered && currentQuestion < questions.length - 1) return;
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        };
+
+        playbackSpeed.onchange = () => {
+            audio.playbackRate = parseFloat(playbackSpeed.value);
+        };
+
+        loadQuestion();
+    </script>
+</body>
+</html>
