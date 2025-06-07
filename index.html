@@ -3,99 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Francês</title>
+    <title>Quiz de Francês</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @font-face {
-            font-family: 'Franklin Gothic Demi';
-            src: url('https://fonts.cdnfonts.com/css/franklin-gothic-demi');
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        @font-face {
-            font-family: 'Franklin Gothic Heavy';
-            src: url('https://fonts.cdnfonts.com/css/franklin-gothic-heavy');
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
-        @font-face {
-            font-family: 'Rockwell';
-            src: url('https://fonts.cdnfonts.com/css/rockwell');
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        @font-face {
-            font-family: 'Poppins';
-            src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-        }
-        .elliptical-button {
-            border-radius: 9999px;
-        }
-        .rounded-square {
-            border-radius: 1rem;
-        }
-        .option-button {
-            transition: background-color 0.3s;
-        }
-        .option-button:hover {
-            background-color: #C6B9DD;
-        }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        .fade-out { animation: fadeOut 0.5s ease-out; }
+        .slide-in { animation: slideIn 0.5s ease-out; }
     </style>
 </head>
-<body class="font-poppins">
+<body class="bg-[#F4F1EC] min-h-screen flex flex-col items-center justify-center font-['Poppins',_sans-serif]">
     <!-- Intro Video Section -->
-    <div id="intro-section" class="flex items-center justify-center min-h-screen bg-[#062250]">
-        <video id="intro-video" class="w-2/3 md:w-1/3 lg:w-1/4" autoplay>
+    <div id="intro-section" class="fixed inset-0 bg-[#062250] flex items-center justify-center z-50">
+        <video id="intro-video" class="w-3/4 md:w-1/2 lg:w-1/3" autoplay>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Mascot Intro Section -->
-    <div id="mascot-section" class="hidden flex-col items-center justify-center min-h-screen bg-[#F1E1AC]">
+    <!-- Start Page -->
+    <div id="start-page" class="hidden min-h-screen flex flex-col items-center justify-center bg-[#F1E1AC] w-full">
         <img src="MASCOTENEUTRO.png" alt="Mascote Neutro" class="w-1/2 md:w-1/3 lg:w-1/4 mb-8">
-        <button id="start-button" class="bg-[#002F6C] text-white font-franklin-demi text-lg md:text-xl lg:text-2xl py-4 px-8 elliptical-button hover:bg-[#007BA7]">
+        <button id="start-button" class="bg-[#002F6C] text-white font-['Franklin_Gothic_Demi'] text-xl md:text-2xl px-8 py-4 rounded-full hover:bg-[#007BA7] transition-colors">
             INICIAR EXERCÍCIO
         </button>
     </div>
 
     <!-- Quiz Section -->
-    <div id="quiz-section" class="hidden flex items-center justify-center min-h-screen bg-[#F4F1EC]">
-        <img src="LOGODAMIAO.png" alt="Logo Damião" class="absolute top-4 left-4 w-24 md:w-32 lg:w-40">
-        <div class="relative bg-[#002F6C] rounded-square p-6 md:p-8 lg:p-10 w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl">
-            <img src="MASCOTENINHO.png" alt="Mascote Pequeno" class="absolute bottom-0 left-0 w-16 md:w-20 lg:w-24 transform -translate-x-1/2 -translate-y-1/2">
-            <div class="bg-[#C8102E] text-white font-rockwell text-base md:text-lg lg:text-xl text-center py-4 px-6 elliptical-button mx-auto -mt-12 md:-mt-16 w-3/4">
+    <div id="quiz-section" class="hidden min-h-screen relative flex items-center justify-center w-full px-4">
+        <img src="LOGODAMIAO.png" alt="Logo Damiao" class="absolute top-4 left-4 w-24 md:w-32 lg:w-40">
+        <div class="bg-[#002F6C] rounded-3xl p-6 md:p-8 w-full max-w-3xl relative flex flex-col items-center">
+            <img src="MASCOTENINHO.png" alt="Mascote Pequeno" class="absolute bottom-4 left-4 w-16 md:w-20">
+            <div class="bg-[#C8102E] text-white font-['Rockwell'] text-lg md:text-xl text-center px-6 py-3 rounded-full -mt-12 mb-6 w-3/4">
                 Escolha a alternativa que melhor traduz a seguinte palavra:
             </div>
-            <div class="mt-8 text-center">
-                <audio id="word-audio" controls>
-                    <source src="" type="audio/mpeg">
-                </audio>
-                <p id="french-word" class="font-franklin-heavy text-2xl md:text-3xl lg:text-4xl text-black my-4"></p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
-                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
-                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
-                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
+            <div id="quiz-content" class="text-center w-full slide-in">
+                <div class="flex justify-center mb-4">
+                    <audio id="word-audio" controls>
+                        <source src="" type="audio/mp3">
+                    </audio>
+                    <select id="audio-speed" class="ml-2 p-1 rounded">
+                        <option value="0.5">0.5x</option>
+                        <option value="1" selected>1x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2">2x</option>
+                    </select>
                 </div>
-                <p id="result-text" class="font-franklin-demi text-lg md:text-xl lg:text-2xl mt-6 text-black"></p>
+                <h2 id="french-word" class="font-['Franklin_Gothic_Heavy'] text-3xl md:text-4xl text-black mb-6"></h2>
+                <div id="options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <!-- Options will be dynamically inserted here -->
+                </div>
+                <div id="feedback" class="font-['Poppins'] text-xl md:text-2xl text-black"></div>
             </div>
-            <div class="flex justify-between mt-8">
-                <button id="back-button" class="bg-[#3B8C59] text-white font-poppins text-base md:text-lg py-3 px-6 rounded-square hover:bg-[#2E6C00]">
-                    VOLTAR
-                </button>
-                <button id="next-button" class="bg-[#3B8C59] text-white font-poppins text-base md:text-lg py-3 px-6 rounded-square hover:bg-[#2E6C00]">
-                    AVANÇAR
-                </button>
+            <div class="flex justify-between mt-6 w-full">
+                <button id="back-button" class="bg-[#3B8C59] text-white font-['Poppins'] px-6 py-2 rounded-full hover:bg-[#2E6C00] transition-colors">VOLTAR</button>
+                <button id="next-button" class="bg-[#3B8C59] text-white font-['Poppins'] px-6 py-2 rounded-full hover:bg-[#2E6C00] transition-colors">AVANÇAR</button>
             </div>
         </div>
     </div>
 
-    <!-- Result Section -->
-    <div id="result-section" class="hidden flex items-center justify-center min-h-screen bg-[#F4F1EC]">
-        <img src="LOGODAMIAO.png" alt="Logo Damião" class="absolute top-4 left-4 w-24 md:w-32 lg:w-40">
-        <div class="bg-[#002F6C] rounded-square p-6 md:p-8 lg:p-10 w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl text-center">
-            <div class="bg-[#C8102E] font-franklin-demi text-xl md:text-2xl lg:text-3xl text-white py-4 px-6 elliptical-button mx-auto -mt-12 md:-mt-16 w-3/4">
-                <span id="result-title"></span>
-            </div>
-            <p id="result-message" class="font-poppins text-base md:text-lg lg:text-xl text-black mt-6"></p>
-            <img id="result-mascot" src="" alt="Mascote Resultado" class="w-1/2 md:w-1/3 lg:w-1/4 mx-auto mt-6">
+    <!-- Results Section -->
+    <div id="results-section" class="hidden min-h-screen flex items-center justify-center w-full px-4">
+        <div class="bg-[#002F6C] rounded-3xl p-6 md:p-8 w-full max-w-3xl flex flex-col items-center">
+            <div id="result-box" class="bg-[#C8102E] text-white font-['Franklin_Gothic_Demi'] text-2xl md:text-3xl text-center px-6 py-3 rounded-3xl mb-4"></div>
+            <p id="result-text" class="font-['Poppins'] text-lg md:text-xl text-white text-center mb-6"></p>
+            <img id="result-mascot" src="" alt="Mascote Resultado" class="w-1/2 md:w-1/3">
         </div>
     </div>
 
+    <!-- Audio for feedback -->
     <audio id="win-audio" src="WIN.wav"></audio>
     <audio id="error-audio" src="ERROR.wav"></audio>
     <audio id="button-audio" src="BUTTON.mp3"></audio>
@@ -103,60 +90,30 @@
 
     <script>
         const questions = [
-            { word: "Bonjour", correct: "Bom dia", options: ["Bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonjour.m4a" },
-            { word: "Salut", correct: "Olá", options: ["Olá", "Bom dia", "Obrigado(a)", "Por favor"], audio: "salut.mp3" },
-            { word: "Merci", correct: "Obrigado(a)", options: ["Obrigado(a)", "Por favor", "Perdão", "De nada"], audio: "merci.mp3" },
-            { word: "Coucou", correct: "Oi, Oie, Oizinho", options: ["Oi, Oie, Oizinho", "Bom dia", "Tchau", "Boa noite"], audio: "coucou.mp3" },
-            { word: "S'il te plaît", correct: "Por favor (uso informal)", options: ["Por favor (uso informal)", "Obrigado(a)", "De nada", "Até logo"], audio: "s'il te plaît.mp3" },
-            { word: "S'il vous plaît", correct: "Por favor (uso formal)", options: ["Por favor (uso formal)", "Perdão", "Olá", "Boa noite"], audio: "s'il vous plaît.mp3" },
-            { word: "Pardon", correct: "Perdão. Desculpa", options: ["Perdão. Desculpa", "Bom dia", "Obrigado(a)", "De nada"], audio: "pardon.mp3" },
-            { word: "De rien", correct: "De nada", options: ["De nada", "Por favor", "Tchau", "Olá"], audio: "de rien.mp3" },
-            { word: "À bientôt", correct: "Até breve. Até logo", options: ["Até breve. Até logo", "Boa noite", "Bom dia", "Por favor"], audio: "à bientôt.mp3" },
-            { word: "Au revoir", correct: "Tchau. Nos vemos!", options: ["Tchau. Nos vemos!", "Obrigado(a)", "Perdão", "Olá"], audio: "au revoir.mp3" },
-            { word: "Bonne nuit", correct: "Boa noite (despedida)", options: ["Boa noite (despedida)", "Bom dia", "Por favor", "De nada"], audio: "bonne nuit.mp3" },
-            { word: "Bonne soirée", correct: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Olá", "Obrigado(a)", "Tchau"], audio: "bonne soirée.mp3" },
-            { word: "Bonsoir", correct: "Boa noite (cumprimento)", options: ["Boa noite (cumprimento)", "Bom dia", "Por favor", "De nada"], audio: "bonsoir.mp3" },
-            { word: "Bonne journée", correct: "Tenha um bom dia", options: ["Tenha um bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonne journée.mp3" },
-            { word: "Bon après-midi", correct: "Boa tarde", options: ["Boa tarde", "Bom dia", "Obrigado(a)", "Por favor"], audio: "bon après midi.mp3" },
-            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", options: ["Eu sou (uso para se apresentar)", "Boa noite", "Olá", "Tchau"], audio: "moi c'est.mp3" },
-            { word: "Je m'appelle...", correct: "Eu me chamo", options: ["Eu me chamo", "Por favor", "Obrigado(a)", "De nada"], audio: "je m'apelle.mp3" }
+            { word: "Bonjour", audio: "bonjour.m4a", correct: "Bom dia", options: ["Bom dia", "Boa noite", "Olá", "Tchau"] },
+            { word: "Salut", audio: "salut.mp3", correct: "Olá", options: ["Olá", "Por favor", "Obrigado(a)", "Boa tarde"] },
+            { word: "Merci", audio: "merci.mp3", correct: "Obrigado(a)", options: ["Obrigado(a)", "Por favor", "Desculpa", "De nada"] },
+            { word: "Coucou", audio: "coucou.mp3", correct: "Oi", options: ["Oi", "Tchau", "Boa noite", "Bom dia"] },
+            { word: "S'il te plaît", audio: "s'il te plaît.mp3", correct: "Por favor", options: ["Por favor", "Obrigado(a)", "Desculpa", "Até logo"] },
+            { word: "S'il vous plaît", audio: "s'il vous plaît.mp3", correct: "Por favor", options: ["Por favor", "Obrigado(a)", "Desculpa", "Até logo"] },
+            { word: "Pardon", audio: "pardon.mp3", correct: "Desculpa", options: ["Desculpa", "Obrigado(a)", "Por favor", "De nada"] },
+            { word: "De rien", audio: "de rien.mp3", correct: "De nada", options: ["De nada", "Por favor", "Desculpa", "Obrigado(a)"] },
+            { word: "À bientôt", audio: "à bientôt.mp3", correct: "Até breve", options: ["Até breve", "Tchau", "Boa noite", "Bom dia"] },
+            { word: "Au revoir", audio: "au revoir.mp3", correct: "Tchau", options: ["Tchau", "Oi", "Boa tarde", "Por favor"] },
+            { word: "Bonne nuit", audio: "bonne nuit.mp3", correct: "Boa noite", options: ["Boa noite", "Bom dia", "Olá", "Tchau"] },
+            { word: "Bonne soirée", audio: "bonne soirée.mp3", correct: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Boa tarde", "Bom dia", "Olá"] },
+            { word: "Bonsoir", audio: "bonsoir.mp3", correct: "Boa noite", options: ["Boa noite", "Bom dia", "Olá", "Tchau"] },
+            { word: "Bonne journée", audio: "bonne journée.mp3", correct: "Tenha um bom dia", options: ["Tenha um bom dia", "Boa noite", "Olá", "Tchau"] },
+            { word: "Bon après-midi", audio: "bon après midi.mp3", correct: "Boa tarde", options: ["Boa tarde", "Bom dia", "Olá", "Tchau"] },
+            { word: "Moi, c'est...", audio: "moi c'est.mp3", correct: "Eu sou", options: ["Eu sou", "Eu me chamo", "Por favor", "Obrigado(a)"] },
+            { word: "Je m'appelle...", audio: "je m'apelle.mp3", correct: "Eu me chamo", options: ["Eu me chamo", "Eu sou", "Por favor", "Obrigado(a)"] }
         ];
 
         let currentQuestion = 0;
         let score = 0;
         let answered = false;
 
-        const introSection = document.getElementById('intro-section');
-        const mascotSection = document.getElementById('mascot-section');
-        const quizSection = document.getElementById('quiz-section');
-        const resultSection = document.getElementById('result-section');
-        const startButton = document.getElementById('start-button');
-        const backButton = document.getElementById('back-button');
-        const nextButton = document.getElementById('next-button');
-        const wordAudio = document.getElementById('word-audio');
-        const frenchWord = document.getElementById('french-word');
-        const optionButtons = document.querySelectorAll('.option-button');
-        const resultText = document.getElementById('result-text');
-        const winAudio = document.getElementById('win-audio');
-        const errorAudio = document.getElementById('error-audio');
-        const buttonAudio = document.getElementById('button-audio');
-        const resultTitle = document.getElementById('result-title');
-        const resultMessage = document.getElementById('result-message');
-        const resultMascot = document.getElementById('result-mascot');
-        const resultAudio = document.getElementById('result-audio');
-        const introVideo = document.getElementById('intro-video');
-
-        // Ensure video plays automatically with sound
-        window.addEventListener('load', () => {
-            introVideo.play().catch(error => {
-                console.error('Autoplay failed:', error);
-                // Fallback: Attempt to play after a short delay
-                setTimeout(() => {
-                    introVideo.play();
-                }, 100);
-            });
-        });
-
+        // Shuffle options
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -165,106 +122,121 @@
             return array;
         }
 
+        // Load question
         function loadQuestion() {
             const question = questions[currentQuestion];
-            wordAudio.src = question.audio;
-            frenchWord.textContent = question.word;
-            resultText.textContent = '';
+            document.getElementById("french-word").textContent = question.word;
+            document.getElementById("word-audio").src = question.audio;
+            document.getElementById("feedback").textContent = "";
             answered = false;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
             const shuffledOptions = shuffle([...question.options]);
-            optionButtons.forEach((button, index) => {
-                button.textContent = shuffledOptions[index];
-                button.disabled = false;
-                button.classList.remove('bg-green-500', 'bg-red-500');
-                button.classList.add('bg-[#F5C84C]');
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");
+                button.className = "bg-[#F5C84C] text-black font-['Poppins'] px-4 py-2 rounded-3xl hover:bg-[#C6B9DD] transition-colors";
+                button.textContent = option;
+                button.addEventListener("click", () => checkAnswer(option, question.correct));
+                optionsContainer.appendChild(button);
             });
+
+            document.getElementById("quiz-content").classList.add("slide-in");
+            setTimeout(() => document.getElementById("quiz-content").classList.remove("slide-in"), 500);
         }
 
-        function showResult() {
-            const percentage = (score / questions.length) * 100;
-            let title, message, mascot, audio;
-            if (percentage >= 95) {
-                title = "EXCELENTE";
-                message = `Você acertou ${score}, continue assim, um excelente resultado`;
-                mascot = "MASCOTEFELIZ.png";
-                audio = "POSITIVO.mp3";
-            } else if (percentage >= 75) {
-                title = "PARABÉNS";
-                message = `Você acertou ${score}, continue assim, um bom resultado`;
-                mascot = "MASCOTEALEGRE.png";
-                audio = "POSITIVO.mp3";
-            } else if (percentage >= 60) {
-                title = "QUASE LÁ";
-                message = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
-                mascot = "MASCOTEDUVIDA.png";
-                audio = "NEGATIVO.mp3";
+        // Check answer
+        function checkAnswer(selected, correct) {
+            if (answered) return;
+            answered = true;
+            const feedback = document.getElementById("feedback");
+            if (selected === correct) {
+                feedback.textContent = "CORRETO";
+                score++;
+                document.getElementById("win-audio").play();
             } else {
-                title = "NÃO FOI DESSA VEZ";
-                message = `Você acertou ${score}, um resultado abaixo do esperado`;
-                mascot = "MASCOTEDUVIDA.png";
-                audio = "NEGATIVO.mp3";
+                feedback.textContent = "INCORRETO";
+                document.getElementById("error-audio").play();
             }
-            resultTitle.textContent = title;
-            resultMessage.textContent = message;
-            resultMascot.src = mascot;
-            resultAudio.src = audio;
-            resultAudio.play();
-            quizSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
         }
 
-        introVideo.addEventListener('ended', () => {
-            introSection.classList.add('hidden');
-            mascotSection.classList.remove('hidden');
+        // Show results
+        function showResults() {
+            const percentage = (score / questions.length) * 100;
+            const resultBox = document.getElementById("result-box");
+            const resultText = document.getElementById("result-text");
+            const resultMascot = document.getElementById("result-mascot");
+            const resultAudio = document.getElementById("result-audio");
+
+            if (percentage >= 95) {
+                resultBox.textContent = "EXCELENTE";
+                resultText.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
+                resultMascot.src = "MASCOTEFELIZ.png";
+                resultAudio.src = "POSITIVO.mp3";
+            } else if (percentage >= 75) {
+                resultBox.textContent = "PARABÉNS";
+                resultText.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
+                resultMascot.src = "MASCOTEALEGRE.png";
+                resultAudio.src = "POSITIVO.mp3";
+            } else if (percentage >= 60) {
+                resultBox.textContent = "QUASE LÁ";
+                resultText.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
+                resultMascot.src = "MASCOTEDUVIDA.png";
+                resultAudio.src = "NEGATIVO.mp3";
+            } else {
+                resultBox.textContent = "NÃO FOI DESSA VEZ";
+                resultText.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
+                resultMascot.src = "MASCOTEDUVIDA.png";
+                resultAudio.src = "NEGATIVO.mp3";
+            }
+            resultAudio.play();
+            document.getElementById("quiz-section").classList.add("fade-out");
+            setTimeout(() => {
+                document.getElementById("quiz-section").classList.add("hidden");
+                document.getElementById("results-section").classList.remove("hidden");
+                document.getElementById("results-section").classList.add("fade-in");
+            }, 500);
+        }
+
+        // Event Listeners
+        document.getElementById("intro-video").addEventListener("ended", () => {
+            document.getElementById("intro-section").classList.add("fade-out");
+            setTimeout(() => {
+                document.getElementById("intro-section").classList.add("hidden");
+                document.getElementById("start-page").classList.remove("hidden");
+                document.getElementById("start-page").classList.add("fade-in");
+            }, 500);
         });
 
-        startButton.addEventListener('click', () => {
-            buttonAudio.play();
-            mascotSection.classList.add('hidden');
-            quizSection.classList.remove('hidden');
-            loadQuestion();
+        document.getElementById("start-button").addEventListener("click", () => {
+            document.getElementById("start-page").classList.add("fade-out");
+            setTimeout(() => {
+                document.getElementById("start-page").classList.add("hidden");
+                document.getElementById("quiz-section").classList.remove("hidden");
+                document.getElementById("quiz-section").classList.add("fade-in");
+                loadQuestion();
+            }, 500);
         });
 
-        optionButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (!answered) {
-                    answered = true;
-                    const selected = button.textContent;
-                    const correct = questions[currentQuestion].correct;
-                    if (selected === correct) {
-                        score++;
-                        resultText.textContent = "CORRETO";
-                        button.classList.remove('bg-[#F5C84C]');
-                        button.classList.add('bg-green-500');
-                        winAudio.play();
-                    } else {
-                        resultText.textContent = "INCORRETO";
-                        button.classList.remove('bg-[#F5C84C]');
-                        button.classList.add('bg-red-500');
-                        errorAudio.play();
-                    }
-                    optionButtons.forEach(btn => btn.disabled = true);
-                }
-            });
+        document.getElementById("audio-speed").addEventListener("change", (e) => {
+            document.getElementById("word-audio").playbackRate = parseFloat(e.target.value);
         });
 
-        backButton.addEventListener('click', () => {
-            buttonAudio.play();
+        document.getElementById("back-button").addEventListener("click", () => {
             if (currentQuestion > 0) {
+                document.getElementById("button-audio").play();
                 currentQuestion--;
                 loadQuestion();
             }
         });
 
-        nextButton.addEventListener('click', () => {
-            buttonAudio.play();
-            if (answered) {
+        document.getElementById("next-button").addEventListener("click", () => {
+            document.getElementById("button-audio").play();
+            if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    loadQuestion();
-                } else {
-                    showResult();
-                }
+                loadQuestion();
+            } else {
+                showResults();
             }
         });
     </script>
