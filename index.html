@@ -233,6 +233,17 @@
         }
 
         /* Results Page */
+        #resultsPage {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #F1E1AC;
+            padding: 20px;
+            width: 100%;
+        }
+
         .results-container {
             background-color: #C8102E;
             border-radius: 20px;
@@ -269,11 +280,6 @@
 
         .fade-in {
             animation: fadeIn 0.5s ease-in;
-        }
-
-        /* Hide elements */
-        .hidden {
-            display: none !important;
         }
     </style>
 </head>
@@ -332,8 +338,8 @@
         </div>
     </div>
 
-    <!-- Results Page (shown within quiz container) -->
-    <div id="resultsPage" class="hidden">
+    <!-- Results Page -->
+    <div id="resultsPage">
         <div class="results-container">
             <h1 class="results-title" id="resultsTitle"></h1>
             <p class="results-message" id="resultsMessage"></p>
@@ -625,8 +631,9 @@
                 negativeSound.play();
             }
             
-            page3.classList.add('hidden');
-            resultsPage.classList.remove('hidden');
+            page3.style.display = 'none';
+            resultsPage.style.display = 'flex';
+            resultsPage.classList.add('fade-in');
         }
 
         // Event listeners
@@ -651,7 +658,7 @@
         nextButton.addEventListener('click', goToNextQuestion);
 
         playButton.addEventListener('click', () => {
-            buttonSound.play();
+            // Removed button sound for play audio
             currentAudio.play();
         });
 
