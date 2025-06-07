@@ -22,14 +22,24 @@
             overflow-x: hidden;
         }
 
-        #intro-video {
+        #intro-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #062250;
             z-index: 1000;
+        }
+
+        #intro-video {
+            width: 70%;
+            max-width: 800px;
+            height: auto;
+            object-fit: contain;
         }
 
         #main-content {
@@ -48,6 +58,7 @@
             max-width: 300px;
             width: 80%;
             margin-bottom: 20px;
+            margin-top: -10%;
         }
 
         #start-button {
@@ -109,6 +120,8 @@
             transform: translateX(-50%);
             width: 80%;
             max-width: 500px;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         #quiz-content {
@@ -168,6 +181,7 @@
         #navigation {
             display: flex;
             justify-content: space-between;
+            margin-top: 20px;
         }
 
         #navigation button {
@@ -216,6 +230,10 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            #intro-video {
+                width: 90%;
+            }
+
             #start-button {
                 font-size: 1.2rem;
                 padding: 10px 30px;
@@ -244,6 +262,10 @@
         }
 
         @media (max-width: 480px) {
+            #intro-video {
+                width: 100%;
+            }
+
             #mascot {
                 max-width: 200px;
             }
@@ -273,9 +295,11 @@
     </style>
 </head>
 <body>
-    <video id="intro-video" autoplay muted>
-        <source src="VIDEOINTRO.mp4" type="video/mp4">
-    </video>
+    <div id="intro-container">
+        <video id="intro-video" autoplay muted>
+            <source src="VIDEOINTRO.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div id="main-content">
         <img id="mascot" src="MASCOTENEUTRO.png" alt="Mascote Neutro">
@@ -330,14 +354,15 @@
             { word: "Bonsoir", correct: "Boa noite (cumprimento)", options: ["Boa tarde", "Bom dia", "Tchau"], audio: "bonsoir.mp3" },
             { word: "Bonne journée", correct: "Tenha um bom dia", options: ["Boa noite", "Olá", "Tchau"], audio: "bonne journée.mp3" },
             { word: "Bon après-midi", correct: "Boa tarde", options: ["Boa noite", "Bom dia", "Olá"], audio: "bon après midi.mp3" },
-            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", options: ["Eu me chamo", "Obrigado", "Por favor"], audio: "moi, c'est.mp3" },
-            { word: "Je m'appelle", correct: "Eu me chamo", options: ["Eu sou", "Obrigado", "Por favor"], audio: "je m'apelle.mp3" },
+            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", options: ["Eu me chamo", "Obrigado", "Por favor"], audio: "moi c'est.mp3" },
+            { word: "Je m'appelle...", correct: "Eu me chamo", options: ["Eu sou", "Obrigado", "Por favor"], audio: "je m'apelle.mp3" },
         ];
 
         let currentQuestion = 0;
         let score = 0;
         let answered = false;
 
+        const videoContainer = document.getElementById('intro-container');
         const video = document.getElementById('intro-video');
         const mainContent = document.getElementById('main-content');
         const quizContainer = document.getElementById('quiz-container');
@@ -355,14 +380,18 @@
         const winAudio = document.getElementById('win-audio');
         const errorAudio = document.getElementById('error-audio');
         const buttonAudio = document.getElementById('button-audio');
+        const resultAudio = document.getElementById('result-audio');
+
         video.onended = () => {
-            video.style.display = 'none';
+            videoContainer.style.display = 'none';
             mainContent.style.display = 'flex';
+            document.body.style.backgroundColor = '#F1E1AC';
         };
 
         startButton.onclick = () => {
             mainContent.style.display = 'none';
             quizContainer.style.display = 'block';
+            document.body.style.backgroundColor = '#062250';
             loadQuestion();
         };
 
@@ -370,22 +399,24 @@
             const q = questions[currentQuestion];
             frenchWord.textContent = q.word;
             quizAudio.src = q.audio;
-            feedbackDiv.innerHTML = '';
-            const allOptions = [q.correctAnswer, ...q.options];
+            feedbackDiv.textContent = '';
+            optionsDiv.innerHTML = '';
+
+            const allOptions = [q.correct, ...q.options];
             shuffle(allOptions);
 
-            optionsDiv.innerHTML = '';
             allOptions.forEach(option => {
                 const button = document.createElement('button');
                 button.className = 'option';
                 button.textContent = option;
-                button.onclick = () => checkAnswer(option, q.correctAnswer);
+                button.onclick = () => checkAnswer(option, q.correct);
                 optionsDiv.appendChild(button);
             });
 
             answered = false;
             backButton.disabled = currentQuestion === 0;
-            nextButton.disabled = true; }        }
+            nextButton.disabled = !answered;
+        }
 
         function checkAnswer(selected, correct) {
             if (answered) return;
@@ -409,7 +440,7 @@
 
         function changeSpeed() {
             const speed = document.getElementById('playback-speed').value;
-            quizAudio.playbackRate = speed;
+            quizAudio.playbackRate = parseFloat(speed);
         }
 
         function playButtonSound() {
@@ -424,22 +455,23 @@
         }
 
         function nextQuestion() {
-            if (answered) {
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    loadQuestion();
-                } else {
-                    showResult();
-                }
+            if (!answered) return;
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
             }
         }
 
         function showResult() {
             quizContainer.style.display = 'none';
             resultContainer.style.display = 'block';
+            document.body.style.backgroundColor = '#F1E1AC';
 
             const percentage = (score / questions.length) * 100;
             let title, message, mascot, audio;
+
             if (percentage >= 95) {
                 title = 'EXCELENTE';
                 message = `Você acertou ${score} de ${questions.length}, continue assim, um excelente resultado!`;
@@ -469,14 +501,12 @@
             resultAudio.play();
         }
 
-        function shuffleArray(array) {
+        function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
-
-        loadQuestion();
     </script>
 </body>
 </html>
