@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprenda Francês</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Rockwell&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Rockwell&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -63,7 +63,8 @@
             border-radius: 50px;
             padding: 15px 40px;
             font-size: 1.8rem;
-            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -117,7 +118,8 @@
         }
 
         .french-word {
-            font-family: 'Franklin Gothic Heavy', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             font-size: 2.8rem;
             text-align: center;
             margin: 20px 0;
@@ -126,6 +128,7 @@
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #10C894;
         }
 
         .audio-controls {
@@ -266,7 +269,8 @@
         }
 
         .result-title {
-            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
@@ -365,7 +369,7 @@
             <source src="VIDEOINTRO.mp4" type="video/mp4">
             Seu navegador não suporta o elemento de vídeo.
         </video>
-        <audio id="intro-audio" autoplay preload="auto">
+        <audio id="intro-audio" preload="auto">
             <source src="SOMINTRO.mp3" type="audio/mp3">
             Seu navegador não suporta o elemento de áudio.
         </audio>
@@ -422,12 +426,22 @@
     </div>
 
     <!-- Áudios -->
-    <audio id="win-sound" src="WIN.wav"></audio>
-    <audio id="error-sound" src="ERROR.wav"></audio>
-    <audio id="button-sound" src="BUTTON.mp3"></audio>
-    <audio id="positive-sound" src="POSITIVO.mp3"></audio>
-    <audio id="negative-sound" src="NEGATIVO.mp3"></audio>
-    <audio id="current-audio">
+    <audio id="win-sound" preload="auto">
+        <source src="WIN.wav" type="audio/wav">
+    </audio>
+    <audio id="error-sound" preload="auto">
+        <source src="ERROR.wav" type="audio/wav">
+    </audio>
+    <audio id="button-sound" preload="auto">
+        <source src="BUTTON.mp3" type="audio/mp3">
+    </audio>
+    <audio id="positive-sound" preload="auto">
+        <source src="POSITIVO.mp3" type="audio/mp3">
+    </audio>
+    <audio id="negative-sound" preload="auto">
+        <source src="NEGATIVO.mp3" type="audio/mp3">
+    </audio>
+    <audio id="current-audio" preload="auto">
         <source src="" type="audio/mp3">
         Seu navegador não suporta o elemento de áudio.
     </audio>
@@ -450,8 +464,8 @@
             { french: "Bonsoir", audio: "bonsoir.mp3", correct: "Boa noite (cumprimento)", incorrects: ["Boa noite (despedida)", "Tenha uma boa noite", "Bom dia"] },
             { french: "Bonne journée", audio: "bonne journée.mp3", correct: "Tenha um bom dia", incorrects: ["Bom dia", "Boa tarde", "Boa noite"] },
             { french: "Bon après-midi", audio: "bon après midi.mp3", correct: "Boa tarde", incorrects: ["Bom dia", "Boa noite", "Tenha um bom dia"] },
-            { french: "Moi, c'est...", audio: "moi c'est.mp Stone3", correct: "Eu sou (uso para se apresentar)", incorrects: ["Eu me chamo", "Meu nome é", "Este sou eu"] },
-            { french: "Je m'appelle...", audio: "je m'apelle.mp3", correct: "Eu me chamo", incorrects: ["Eu sou", "Meu nome é", "Este sou eu"] }
+            { french: "Moi, c'est...", audio: "moi c'est.mp3", correct: "Eu sou (uso para se apresentar)", incorrects: ["Eu me chamo", "Meu nome é", "Este sou eu"] },
+            { french: "Je m'appelle...", audio: "je m'appelle.mp3", correct: "Eu me chamo", incorrects: ["Eu sou", "Meu nome é", "Este sou eu"] }
         ];
 
         // Variáveis de estado
@@ -497,10 +511,19 @@
         normalSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1));
         fastSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1.5));
 
+        // Forçar reprodução do áudio de introdução após carregamento
+        window.addEventListener('load', () => {
+            introAudio.play().catch((error) => {
+                console.error('Erro ao reproduzir o áudio de introdução:', error);
+                feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
+                feedbackElement.className = 'feedback incorrect';
+            });
+        });
+
         // Sincronização de vídeo e áudio
         introVideo.addEventListener('play', () => {
-            introAudio.play().catch(() => {
-                console.error('Erro ao reproduzir o áudio de introdução');
+            introAudio.play().catch((error) => {
+                console.error('Erro ao reproduzir o áudio de introdução:', error);
                 feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
                 feedbackElement.className = 'feedback incorrect';
             });
@@ -551,7 +574,9 @@
         // Reproduz som de botão
         function playButtonSound() {
             buttonSound.currentTime = 0;
-            buttonSound.play().catch(() => console.error('Erro ao reproduzir som de botão'));
+            buttonSound.play().catch((error) => {
+                console.error('Erro ao reproduzir som de botão:', error);
+            });
         }
 
         // Inicia o exercício
@@ -578,9 +603,16 @@
             currentAudio.playbackRate = audioPlaybackRate;
             
             currentAudio.addEventListener('error', () => {
-                feedbackElement.textContent = 'Erro ao carregar o áudio. Tente novamente.';
+                feedbackElement.textContent = 'Erro ao carregar o áudio da palavra.';
                 feedbackElement.className = 'feedback incorrect';
             }, { once: true });
+            
+            // Tenta reproduzir o áudio automaticamente
+            currentAudio.play().catch((error) => {
+                console.error('Erro ao reproduzir áudio da palavra:', error);
+                feedbackElement.textContent = 'Clique no botão de reprodução para ouvir a palavra.';
+                feedbackElement.className = 'feedback incorrect';
+            });
             
             // Cria opções embaralhadas
             const options = shuffleArray([question.correct, ...question.incorrects]);
@@ -619,11 +651,15 @@
                 score++;
                 feedbackElement.textContent = 'CORRETO';
                 feedbackElement.className = 'feedback correct';
-                winSound.play().catch(() => console.error('Erro ao reproduzir som de acerto'));
+                winSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som de acerto:', error);
+                });
             } else {
                 feedbackElement.textContent = 'INCORRETO';
                 feedbackElement.className = 'feedback incorrect';
-                errorSound.play().catch(() => console.error('Erro ao reproduzir som de erro'));
+                errorSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som de erro:', error);
+                });
             }
             
             // Desabilita todas as opções após responder
@@ -645,7 +681,8 @@
         // Reproduz o áudio atual
         function playCurrentAudio() {
             currentAudio.currentTime = 0;
-            currentAudio.play().catch(() => {
+            currentAudio.play().catch((error) => {
+                console.error('Erro ao reproduzir áudio:', error);
                 feedbackElement.textContent = 'Erro ao reproduzir o áudio.';
                 feedbackElement.className = 'feedback incorrect';
             });
@@ -660,8 +697,6 @@
             normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59' : '#002F6C';
             fastSpeedBtn.style.backgroundColor = speed === 1.5 ? '#3B8C59' : '#002F6C';
             
-            slowSpeedBtnਮ
-
             slowSpeedBtn.setAttribute('aria-pressed', speed === 0.5);
             normalSpeedBtn.setAttribute('aria-pressed', speed === 1);
             fastSpeedBtn.setAttribute('aria-pressed', speed === 1.5);
@@ -698,22 +733,30 @@
                 resultTitle.textContent = 'EXCELENTE';
                 resultMessage.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
                 resultMascot.src = 'MASCOTEFELIZ.png';
-                positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
+                positiveSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som positivo:', error);
+                });
             } else if (percentage >= 75) {
                 resultTitle.textContent = 'PARABÉNS';
                 resultMessage.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
                 resultMascot.src = 'MASCOTEALEGRE.png';
-                positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
+                positiveSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som positivo:', error);
+                });
             } else if (percentage >= 60) {
                 resultTitle.textContent = 'QUASE LÁ';
                 resultMessage.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
+                negativeSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som negativo:', error);
+                });
             } else {
                 resultTitle.textContent = 'NÃO FOI DESSA VEZ';
                 resultMessage.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
+                negativeSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som negativo:', error);
+                });
             }
         }
 
