@@ -4,509 +4,268 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de Francês</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Rockwell&family=Franklin+Gothic+Demi&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        @font-face {
+            font-family: 'Franklin Gothic Demi';
+            src: url('https://fonts.cdnfonts.com/css/franklin-gothic-demi');
         }
-
-        body {
-            background-color: #062250;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+        @font-face {
+            font-family: 'Franklin Gothic Heavy';
+            src: url('https://fonts.cdnfonts.com/css/franklin-gothic-heavy');
         }
-
-        #intro-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #062250;
-            z-index: 1000;
+        @font-face {
+            font-family: 'Rockwell';
+            src: url('https://fonts.cdnfonts.com/css/rockwell');
         }
-
-        #intro-video {
-            width: 70%;
-            max-width: 800px;
-            height: auto;
-            object-fit: contain;
+        @font-face {
+            font-family: 'Poppins';
+            src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
         }
-
-        #main-content {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100vh;
-            background-color: #F1E1AC;
-            padding: 20px;
-            position: relative;
+        .fade-out {
+            animation: fadeOut 1s ease-out forwards;
         }
-
-        #mascot {
-            max-width: 300px;
-            width: 80%;
-            margin-bottom: 20px;
-            margin-top: -10%;
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
-
-        #start-button {
-            background-color: #002F6C;
-            color: white;
-            font-family: 'Franklin Gothic Demi', sans-serif;
-            font-size: 1.5rem;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
+        .elliptical-button {
+            border-radius: 9999px;
+        }
+        .rounded-square {
+            border-radius: 1rem;
+        }
+        .option-button {
             transition: background-color 0.3s;
         }
-
-        #start-button:hover {
-            background-color: #007BA7;
-        }
-
-        #quiz-container {
-            display: none;
-            position: relative;
-            background-color: #002F6C;
-            border-radius: 20px;
-            padding: 20px;
-            width: 90%;
-            max-width: 800px;
-            min-height: 500px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            color: white;
-        }
-
-        #logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            max-width: 100px;
-            width: 20%;
-        }
-
-        #mascot-ninho {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            max-width: 80px;
-            width: 15%;
-        }
-
-        #question-header {
-            background-color: #C8102E;
-            font-family: 'Rockwell', serif;
-            font-size: 1.2rem;
-            color: white;
-            padding: 15px;
-            border-radius: 25px;
-            text-align: center;
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            max-width: 500px;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
-        #quiz-content {
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        #french-word {
-            font-family: 'Franklin Gothic Demi', sans-serif;
-            font-size: 2rem;
-            color: black;
-            margin: 20px 0;
-        }
-
-        #audio-controls {
-            margin-bottom: 20px;
-        }
-
-        #audio-controls button {
-            background-color: #F5C84C;
-            border: none;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 0 5px;
-        }
-
-        #options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .option {
-            background-color: #F4F1EC;
-            color: black;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            padding: 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .option:hover {
+        .option-button:hover {
             background-color: #C6B9DD;
-        }
-
-        #feedback {
-            font-family: 'Franklin Gothic Demi', sans-serif;
-            font-size: 1.5rem;
-            color: #F5C84C;
-            margin-bottom: 20px;
-        }
-
-        #navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        #navigation button {
-            background-color: #3B8C59;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #navigation button:hover {
-            background-color: #2E6C00;
-        }
-
-        #result-container {
-            display: none;
-            background-color: #C8102E;
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        #result-title {
-            font-family: 'Franklin Gothic Demi', sans-serif;
-            font-size: 2rem;
-            color: white;
-        }
-
-        #result-message {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
-            color: white;
-            margin: 20px 0;
-        }
-
-        #result-mascot {
-            max-width: 200px;
-            width: 80%;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            #intro-video {
-                width: 90%;
-            }
-
-            #start-button {
-                font-size: 1.2rem;
-                padding: 10px 30px;
-            }
-
-            #french-word {
-                font-size: 1.5rem;
-            }
-
-            #question-header {
-                font-size: 1rem;
-                width: 90%;
-            }
-
-            #options {
-                grid-template-columns: 1fr;
-            }
-
-            #logo {
-                max-width: 80px;
-            }
-
-            #mascot-ninho {
-                max-width: 60px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #intro-video {
-                width: 100%;
-            }
-
-            #mascot {
-                max-width: 200px;
-            }
-
-            #start-button {
-                font-size: 1rem;
-                padding: 8px 20px;
-            }
-
-            #french-word {
-                font-size: 1.2rem;
-            }
-
-            #question-header {
-                font-size: 0.9rem;
-                padding: 10px;
-            }
-
-            #result-title {
-                font-size: 1.5rem;
-            }
-
-            #result-message {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
-<body>
-    <div id="intro-container">
-        <video id="intro-video" autoplay muted>
+<body class="font-poppins">
+    <!-- Intro Video Section -->
+    <div id="intro-section" class="flex items-center justify-center min-h-screen bg-[#062250]">
+        <video id="intro-video" class="w-3/4 md:w-1/2 lg:w-1/3" autoplay>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
         </video>
     </div>
 
-    <div id="main-content">
-        <img id="mascot" src="MASCOTENEUTRO.png" alt="Mascote Neutro">
-        <button id="start-button">INICIAR EXERCÍCIO</button>
+    <!-- Mascot Intro Section -->
+    <div id="mascot-section" class="hidden flex-col items-center justify-center min-h-screen bg-[#F1E1AC]">
+        <img src="MASCOTENEUTRO.png" alt="Mascote Neutro" class="w-1/2 md:w-1/3 lg:w-1/4 mb-8">
+        <button id="start-button" class="bg-[#002F6C] text-white font-franklin-demi text-lg md:text-xl lg:text-2xl py-4 px-8 elliptical-button hover:bg-[#007BA7]">
+            INICIAR EXERCÍCIO
+        </button>
     </div>
 
-    <div id="quiz-container">
-        <img id="logo" src="LOGODAMIAO.png" alt="Logo Damiao">
-        <img id="mascot-ninho" src="MASCOTENINHO.png" alt="Mascote Ninho">
-        <div id="question-header">Escolha a alternativa que melhor traduz a seguinte palavra:</div>
-        <div id="quiz-content">
-            <div id="audio-controls">
-                <button onclick="playAudio()">▶️</button>
-                <input type="range" id="playback-speed" min="0.5" max="2" step="0.25" value="1" onchange="changeSpeed()">
+    <!-- Quiz Section -->
+    <div id="quiz-section" class="hidden flex items-center justify-center min-h-screen bg-[#F4F1EC]">
+        <img src="LOGODAMIAO.png" alt="Logo Damião" class="absolute top-4 left-4 w-24 md:w-32 lg:w-40">
+        <div class="relative bg-[#002F6C] rounded-square p-6 md:p-8 lg:p-10 w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl">
+            <img src="MASCOTENINHO.png" alt="Mascote Pequeno" class="absolute bottom-0 left-0 w-16 md:w-20 lg:w-24 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="bg-[#C8102E] text-white font-rockwell text-base md:text-lg lg:text-xl text-center py-4 px-6 elliptical-button mx-auto -mt-12 md:-mt-16 w-3/4">
+                Escolha a alternativa que melhor traduz a seguinte palavra:
             </div>
-            <div id="french-word"></div>
-            <div id="options"></div>
-            <div id="feedback"></div>
-            <div id="navigation">
-                <button id="back-button" onclick="playButtonSound(); prevQuestion()">VOLTAR</button>
-                <button id="next-button" onclick="playButtonSound(); nextQuestion()">AVANÇAR</button>
+            <div class="mt-8 text-center">
+                <audio id="word-audio" controls>
+                    <source src="" type="audio/mpeg">
+                </audio>
+                <p id="french-word" class="font-franklin-heavy text-2xl md:text-3xl lg:text-4xl text-black my-4"></p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
+                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
+                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
+                    <button class="option-button bg-[#F5C84C] text-black font-poppins text-base md:text-lg py-3 px-4 rounded-square"></button>
+                </div>
+                <p id="result-text" class="font-franklin-demi text-lg md:text-xl lg:text-2xl mt-6 text-black"></p>
+            </div>
+            <div class="flex justify-between mt-8">
+                <button id="back-button" class="bg-[#3B8C59] text-white font-poppins text-base md:text-lg py-3 px-6 rounded-square hover:bg-[#2E6C00]">
+                    VOLTAR
+                </button>
+                <button id="next-button" class="bg-[#3B8C59] text-white font-poppins text-base md:text-lg py-3 px-6 rounded-square hover:bg-[#2E6C00]">
+                    AVANÇAR
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="result-container">
-        <div id="result-title"></div>
-        <div id="result-message"></div>
-        <img id="result-mascot" src="" alt="Mascote Resultado">
+    <!-- Result Section -->
+    <div id="result-section" class="hidden flex items-center justify-center min-h-screen bg-[#F4F1EC]">
+        <img src="LOGODAMIAO.png" alt="Logo Damião" class="absolute top-4 left-4 w-24 md:w-32 lg:w-40">
+        <div class="bg-[#002F6C] rounded-square p-6 md:p-8 lg:p-10 w-11/12 md:w-3/4 lg:w-1/2 max-w-4xl text-center">
+            <div class="bg-[#C8102E] font-franklin-demi text-xl md:text-2xl lg:text-3xl text-white py-4 px-6 elliptical-button mx-auto -mt-12 md:-mt-16 w-3/4">
+                <span id="result-title"></span>
+            </div>
+            <p id="result-message" class="font-poppins text-base md:text-lg lg:text-xl text-black mt-6"></p>
+            <img id="result-mascot" src="" alt="Mascote Resultado" class="w-1/2 md:w-1/3 lg:w-1/4 mx-auto mt-6">
+        </div>
     </div>
 
-    <audio id="quiz-audio"></audio>
     <audio id="win-audio" src="WIN.wav"></audio>
     <audio id="error-audio" src="ERROR.wav"></audio>
     <audio id="button-audio" src="BUTTON.mp3"></audio>
-    <audio id="result-audio"></audio>
+    <audio id="result-audio" src=""></audio>
 
     <script>
         const questions = [
-            { word: "Bonjour", correct: "Bom dia", options: ["Boa noite", "Olá", "Tchau"], audio: "bonjour.m4a" },
-            { word: "Salut", correct: "Olá", options: ["Obrigado", "Por favor", "Tchau"], audio: "salut.mp3" },
-            { word: "Merci", correct: "Obrigado(a)", options: ["De nada", "Por favor", "Boa noite"], audio: "merci.mp3" },
-            { word: "Coucou", correct: "Oi, Oie, Oizinho", options: ["Olá", "Tchau", "Boa tarde"], audio: "coucou.mp3" },
-            { word: "S'il te plaît", correct: "Por favor (uso informal)", options: ["Obrigado", "De nada", "Perdão"], audio: "s'il te plaît.mp3" },
-            { word: "S'il vous plaît", correct: "Por favor (uso formal)", options: ["Obrigado", "De nada", "Perdão"], audio: "s'il vous plaît.mp3" },
-            { word: "Pardon", correct: "Perdão. Desculpa", options: ["Obrigado", "Por favor", "De nada"], audio: "pardon.mp3" },
-            { word: "De rien", correct: "De nada", options: ["Obrigado", "Por favor", "Tchau"], audio: "de rien.mp3" },
-            { word: "À bientôt", correct: "Até breve. Até logo", options: ["Boa noite", "Tchau", "Olá"], audio: "à bientôt.mp3" },
-            { word: "Au revoir", correct: "Tchau. Nos vemos!", options: ["Olá", "Obrigado", "Por favor"], audio: "au revoir.mp3" },
-            { word: "Bonne nuit", correct: "Boa noite (despedida)", options: ["Boa tarde", "Bom dia", "Olá"], audio: "bonne nuit.mp3" },
-            { word: "Bonne soirée", correct: "Tenha uma boa noite", options: ["Boa tarde", "Bom dia", "Olá"], audio: "bonne soirée.mp3" },
-            { word: "Bonsoir", correct: "Boa noite (cumprimento)", options: ["Boa tarde", "Bom dia", "Tchau"], audio: "bonsoir.mp3" },
-            { word: "Bonne journée", correct: "Tenha um bom dia", options: ["Boa noite", "Olá", "Tchau"], audio: "bonne journée.mp3" },
-            { word: "Bon après-midi", correct: "Boa tarde", options: ["Boa noite", "Bom dia", "Olá"], audio: "bon après midi.mp3" },
-            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", options: ["Eu me chamo", "Obrigado", "Por favor"], audio: "moi c'est.mp3" },
-            { word: "Je m'appelle...", correct: "Eu me chamo", options: ["Eu sou", "Obrigado", "Por favor"], audio: "je m'apelle.mp3" },
+            { word: "Bonjour", correct: "Bom dia", options: ["Bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonjour.m4a" },
+            { word: "Salut", correct: "Olá", options: ["Olá", "Bom dia", "Obrigado(a)", "Por favor"], audio: "salut.mp3" },
+            { word: "Merci", correct: "Obrigado(a)", options: ["Obrigado(a)", "Por favor", "Perdão", "De nada"], audio: "merci.mp3" },
+            { word: "Coucou", correct: "Oi, Oie, Oizinho", options: ["Oi, Oie, Oizinho", "Bom dia", "Tchau", "Boa noite"], audio: "coucou.mp3" },
+            { word: "S'il te plaît", correct: "Por favor (uso informal)", options: ["Por favor (uso informal)", "Obrigado(a)", "De nada", "Até logo"], audio: "s'il te plaît.mp3" },
+            { word: "S'il vous plaît", correct: "Por favor (uso formal)", options: ["Por favor (uso formal)", "Perdão", "Olá", "Boa noite"], audio: "s'il vous plaît.mp3" },
+            { word: "Pardon", correct: "Perdão. Desculpa", options: ["Perdão. Desculpa", "Bom dia", "Obrigado(a)", "De nada"], audio: "pardon.mp3" },
+            { word: "De rien", correct: "De nada", options: ["De nada", "Por favor", "Tchau", "Olá"], audio: "de rien.mp3" },
+            { word: "À bientôt", correct: "Até breve. Até logo", options: ["Até breve. Até logo", "Boa noite", "Bom dia", "Por favor"], audio: "à bientôt.mp3" },
+            { word: "Au revoir", correct: "Tchau. Nos vemos!", options: ["Tchau. Nos vemos!", "Obrigado(a)", "Perdão", "Olá"], audio: "au revoir.mp3" },
+            { word: "Bonne nuit", correct: "Boa noite (despedida)", options: ["Boa noite (despedida)", "Bom dia", "Por favor", "De nada"], audio: "bonne nuit.mp3" },
+            { word: "Bonne soirée", correct: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Olá", "Obrigado(a)", "Tchau"], audio: "bonne soirée.mp3" },
+            { word: "Bonsoir", correct: "Boa noite (cumprimento)", options: ["Boa noite (cumprimento)", "Bom dia", "Por favor", "De nada"], audio: "bonsoir.mp3" },
+            { word: "Bonne journée", correct: "Tenha um bom dia", options: ["Tenha um bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonne journée.mp3" },
+            { word: "Bon après-midi", correct: "Boa tarde", options: ["Boa tarde", "Bom dia", "Obrigado(a)", "Por favor"], audio: "bon après midi.mp3" },
+            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", options: ["Eu sou (uso para se apresentar)", "Boa noite", "Olá", "Tchau"], audio: "moi c'est.mp3" },
+            { word: "Je m'appelle...", correct: "Eu me chamo", options: ["Eu me chamo", "Por favor", "Obrigado(a)", "De nada"], audio: "je m'apelle.mp3" }
         ];
 
         let currentQuestion = 0;
         let score = 0;
         let answered = false;
 
-        const videoContainer = document.getElementById('intro-container');
-        const video = document.getElementById('intro-video');
-        const mainContent = document.getElementById('main-content');
-        const quizContainer = document.getElementById('quiz-container');
+        const introSection = document.getElementById('intro-section');
+        const mascotSection = document.getElementById('mascot-section');
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
         const startButton = document.getElementById('start-button');
-        const frenchWord = document.getElementById('french-word');
-        const optionsDiv = document.getElementById('options');
-        const feedbackDiv = document.getElementById('feedback');
         const backButton = document.getElementById('back-button');
         const nextButton = document.getElementById('next-button');
-        const resultContainer = document.getElementById('result-container');
-        const resultTitle = document.getElementById('result-title');
-        const resultMessage = document.getElementById('result-message');
-        const resultMascot = document.getElementById('result-mascot');
-        const quizAudio = document.getElementById('quiz-audio');
+        const wordAudio = document.getElementById('word-audio');
+        const frenchWord = document.getElementById('french-word');
+        const optionButtons = document.querySelectorAll('.option-button');
+        const resultText = document.getElementById('result-text');
         const winAudio = document.getElementById('win-audio');
         const errorAudio = document.getElementById('error-audio');
         const buttonAudio = document.getElementById('button-audio');
+        const resultTitle = document.getElementById('result-title');
+        const resultMessage = document.getElementById('result-message');
+        const resultMascot = document.getElementById('result-mascot');
         const resultAudio = document.getElementById('result-audio');
-
-        video.onended = () => {
-            videoContainer.style.display = 'none';
-            mainContent.style.display = 'flex';
-            document.body.style.backgroundColor = '#F1E1AC';
-        };
-
-        startButton.onclick = () => {
-            mainContent.style.display = 'none';
-            quizContainer.style.display = 'block';
-            document.body.style.backgroundColor = '#062250';
-            loadQuestion();
-        };
-
-        function loadQuestion() {
-            const q = questions[currentQuestion];
-            frenchWord.textContent = q.word;
-            quizAudio.src = q.audio;
-            feedbackDiv.textContent = '';
-            optionsDiv.innerHTML = '';
-
-            const allOptions = [q.correct, ...q.options];
-            shuffle(allOptions);
-
-            allOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'option';
-                button.textContent = option;
-                button.onclick = () => checkAnswer(option, q.correct);
-                optionsDiv.appendChild(button);
-            });
-
-            answered = false;
-            backButton.disabled = currentQuestion === 0;
-            nextButton.disabled = !answered;
-        }
-
-        function checkAnswer(selected, correct) {
-            if (answered) return;
-            answered = true;
-
-            if (selected === correct) {
-                feedbackDiv.textContent = 'CORRETO';
-                score++;
-                winAudio.play();
-            } else {
-                feedbackDiv.textContent = 'INCORRETO';
-                errorAudio.play();
-            }
-
-            nextButton.disabled = false;
-        }
-
-        function playAudio() {
-            quizAudio.play();
-        }
-
-        function changeSpeed() {
-            const speed = document.getElementById('playback-speed').value;
-            quizAudio.playbackRate = parseFloat(speed);
-        }
-
-        function playButtonSound() {
-            buttonAudio.play();
-        }
-
-        function prevQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                loadQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (!answered) return;
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function showResult() {
-            quizContainer.style.display = 'none';
-            resultContainer.style.display = 'block';
-            document.body.style.backgroundColor = '#F1E1AC';
-
-            const percentage = (score / questions.length) * 100;
-            let title, message, mascot, audio;
-
-            if (percentage >= 95) {
-                title = 'EXCELENTE';
-                message = `Você acertou ${score} de ${questions.length}, continue assim, um excelente resultado!`;
-                mascot = 'MASCOTEFELIZ.png';
-                audio = 'POSITIVO.mp3';
-            } else if (percentage >= 75) {
-                title = 'PARABÉNS';
-                message = `Você acertou ${score} de ${questions.length}, continue assim, um bom resultado!`;
-                mascot = 'MASCOTEALEGRE.png';
-                audio = 'POSITIVO.mp3';
-            } else if (percentage >= 60) {
-                title = 'QUASE LÁ';
-                message = `Você acertou ${score} de ${questions.length}, não é um resultado ruim, mas também não é um bom resultado.`;
-                mascot = 'MASCOTEDUVIDA.png';
-                audio = 'NEGATIVO.mp3';
-            } else {
-                title = 'NÃO FOI DESSA VEZ';
-                message = `Você acertou ${score} de ${questions.length}, um resultado abaixo do esperado.`;
-                mascot = 'MASCOTEDUVIDA.png';
-                audio = 'NEGATIVO.mp3';
-            }
-
-            resultTitle.textContent = title;
-            resultMessage.textContent = message;
-            resultMascot.src = mascot;
-            resultAudio.src = audio;
-            resultAudio.play();
-        }
+        const introVideo = document.getElementById('intro-video');
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
         }
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            wordAudio.src = question.audio;
+            frenchWord.textContent = question.word;
+            resultText.textContent = '';
+            answered = false;
+            const shuffledOptions = shuffle([...question.options]);
+            optionButtons.forEach((button, index) => {
+                button.textContent = shuffledOptions[index];
+                button.disabled = false;
+                button.classList.remove('bg-green-500', 'bg-red-500');
+                button.classList.add('bg-[#F5C84C]');
+            });
+        }
+
+        function showResult() {
+            const percentage = (score / questions.length) * 100;
+            let title, message, mascot, audio;
+            if (percentage >= 95) {
+                title = "EXCELENTE";
+                message = `Você acertou ${score}, continue assim, um excelente resultado`;
+                mascot = "MASCOTEFELIZ.png";
+                audio = "POSITIVO.mp3";
+            } else if (percentage >= 75) {
+                title = "PARABÉNS";
+                message = `Você acertou ${score}, continue assim, um bom resultado`;
+                mascot = "MASCOTEALEGRE.png";
+                audio = "POSITIVO.mp3";
+            } else if (percentage >= 60) {
+                title = "QUASE LÁ";
+                message = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
+                mascot = "MASCOTEDUVIDA.png";
+                audio = "NEGATIVO.mp3";
+            } else {
+                title = "NÃO FOI DESSA VEZ";
+                message = `Você acertou ${score}, um resultado abaixo do esperado`;
+                mascot = "MASCOTEDUVIDA.png";
+                audio = "NEGATIVO.mp3";
+            }
+            resultTitle.textContent = title;
+            resultMessage.textContent = message;
+            resultMascot.src = mascot;
+            resultAudio.src = audio;
+            resultAudio.play();
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+        }
+
+        introVideo.addEventListener('ended', () => {
+            introVideo.classList.add('fade-out');
+            setTimeout(() => {
+                introSection.classList.add('hidden');
+                mascotSection.classList.remove('hidden');
+            }, 1000);
+        });
+
+        startButton.addEventListener('click', () => {
+            buttonAudio.play();
+            mascotSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            loadQuestion();
+        });
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (!answered) {
+                    answered = true;
+                    const selected = button.textContent;
+                    const correct = questions[currentQuestion].correct;
+                    if (selected === correct) {
+                        score++;
+                        resultText.textContent = "CORRETO";
+                        button.classList.remove('bg-[#F5C84C]');
+                        button.classList.add('bg-green-500');
+                        winAudio.play();
+                    } else {
+                        resultText.textContent = "INCORRETO";
+                        button.classList.remove('bg-[#F5C84C]');
+                        button.classList.add('bg-red-500');
+                        errorAudio.play();
+                    }
+                    optionButtons.forEach(btn => btn.disabled = true);
+                }
+            });
+        });
+
+        backButton.addEventListener('click', () => {
+            buttonAudio.play();
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            buttonAudio.play();
+            if (answered) {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }
+        });
     </script>
 </body>
 </html>
