@@ -15,6 +15,7 @@
 
         body {
             overflow-x: hidden;
+            background-color: #F1E1AC;
         }
 
         /* Page 1 - Intro */
@@ -24,7 +25,8 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #062250;
+            background: url('fundo.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,8 +34,10 @@
         }
 
         #introVideo {
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 70%;
+            max-height: 70%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             opacity: 1;
             transition: opacity 1s ease-out;
         }
@@ -48,11 +52,18 @@
             background-color: #F1E1AC;
             padding: 20px;
             text-align: center;
+            animation: fadeIn 0.5s ease-in;
         }
 
         #mascotNeutro {
             width: 200px;
             margin-bottom: 40px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .start-button {
@@ -64,11 +75,13 @@
             font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 47, 108, 0.4);
         }
 
         .start-button:hover {
             transform: scale(1.05);
+            box-shadow: 0 7px 20px rgba(0, 47, 108, 0.6);
         }
 
         /* Page 3 - Quiz */
@@ -81,6 +94,7 @@
             background-color: #F1E1AC;
             padding: 20px;
             position: relative;
+            animation: fadeIn 0.5s ease-in;
         }
 
         .logo {
@@ -88,6 +102,11 @@
             top: 20px;
             left: 20px;
             width: 100px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .quiz-container {
@@ -98,7 +117,12 @@
             max-width: 800px;
             position: relative;
             margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .quiz-container:hover {
+            transform: translateY(-5px);
         }
 
         .question-header {
@@ -108,6 +132,7 @@
             margin-top: -40px;
             margin-bottom: 20px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(200, 16, 46, 0.4);
         }
 
         .question-header h2 {
@@ -121,41 +146,70 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
+            background-color: #F4F1EC;
+            padding: 15px;
+            border-radius: 50px;
         }
 
         .audio-controls button {
             background-color: #F5C84C;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             margin: 0 10px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(245, 200, 76, 0.4);
+        }
+
+        .audio-controls button:hover {
+            transform: scale(1.1);
+            background-color: #C6B9DD;
         }
 
         .speed-control {
             margin-left: 20px;
             display: flex;
             align-items: center;
+            background-color: #F4F1EC;
+            padding: 5px 15px;
+            border-radius: 50px;
         }
 
         .speed-control label {
-            color: white;
+            color: #002F6C;
             margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .speed-control select {
+            background-color: white;
+            border: 2px solid #002F6C;
+            border-radius: 5px;
+            padding: 5px;
         }
 
         .french-word {
             font-family: 'Franklin Gothic Heavy', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             text-align: center;
             margin: 20px 0;
             color: black;
             background-color: #F4F1EC;
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
         .options-container {
@@ -180,10 +234,12 @@
             transition: all 0.3s;
             font-size: 1rem;
             text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .option:hover {
             background-color: #C6B9DD;
+            transform: translateY(-3px);
         }
 
         .feedback {
@@ -192,14 +248,29 @@
             font-size: 1.5rem;
             margin: 20px 0;
             height: 40px;
+            transition: all 0.3s;
         }
 
         .correct {
             color: #3B8C59;
+            animation: correctAnim 0.5s;
+        }
+
+        @keyframes correctAnim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .incorrect {
             color: #C8102E;
+            animation: incorrectAnim 0.5s;
+        }
+
+        @keyframes incorrectAnim {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
         .mascotNinho {
@@ -207,6 +278,11 @@
             bottom: -20px;
             left: -20px;
             width: 100px;
+            transition: transform 0.3s;
+        }
+
+        .mascotNinho:hover {
+            transform: scale(1.1);
         }
 
         .navigation-buttons {
@@ -221,15 +297,41 @@
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 10px 25px;
+            padding: 12px 25px;
             font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 47, 108, 0.4);
         }
 
         .nav-button:hover {
             transform: scale(1.05);
+            background-color: #C8102E;
+        }
+
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 90%;
+            max-width: 800px;
+            height: 10px;
+            background-color: #F4F1EC;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #3B8C59;
+            width: 0%;
+            transition: width 0.5s ease;
         }
 
         /* Results Page */
@@ -242,34 +344,65 @@
             background-color: #F1E1AC;
             padding: 20px;
             width: 100%;
+            animation: fadeIn 0.5s ease-in;
         }
 
         .results-container {
             background-color: #C8102E;
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             width: 90%;
             max-width: 600px;
             text-align: center;
             color: white;
             margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(200, 16, 46, 0.4);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .results-title {
             font-family: 'Franklin Gothic Demi', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .results-message {
             font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
             margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         .results-mascot {
             width: 200px;
-            margin: 0 auto;
+            margin: 20px auto;
+            animation: bounce 2s infinite;
+        }
+
+        .repeat-button {
+            background-color: #002F6C;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 47, 108, 0.4);
+        }
+
+        .repeat-button:hover {
+            transform: scale(1.05);
+            background-color: #F5C84C;
+            color: #002F6C;
         }
 
         /* Animations */
@@ -280,6 +413,44 @@
 
         .fade-in {
             animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Audio Playing Indicator */
+        .audio-playing {
+            position: relative;
+        }
+
+        .audio-playing::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background-color: rgba(245, 200, 76, 0.5);
+            border-radius: 50%;
+            animation: pulseAudio 1s infinite;
+        }
+
+        @keyframes pulseAudio {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+
+        /* Swipe instructions for mobile */
+        .swipe-instruction {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #002F6C;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .swipe-instruction {
+                display: block;
+            }
         }
     </style>
 </head>
@@ -302,6 +473,10 @@
     <!-- Page 3 - Quiz -->
     <div id="page3">
         <img class="logo" src="LOGODAMIAO.png" alt="Logo">
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
 
         <div class="quiz-container">
             <div class="question-header">
@@ -336,6 +511,10 @@
             <button class="nav-button" id="backButton">VOLTAR</button>
             <button class="nav-button" id="nextButton">AVANÇAR</button>
         </div>
+
+        <div class="swipe-instruction">
+            Deslize para a esquerda/direita para navegar entre questões
+        </div>
     </div>
 
     <!-- Results Page -->
@@ -344,6 +523,7 @@
             <h1 class="results-title" id="resultsTitle"></h1>
             <p class="results-message" id="resultsMessage"></p>
             <img class="results-mascot" id="resultsMascot" src="" alt="Mascote">
+            <button class="repeat-button" id="repeatButton">REPETIR QUESTÕES ERRADAS</button>
         </div>
     </div>
 
@@ -487,16 +667,32 @@
         const resultsTitle = document.getElementById('resultsTitle');
         const resultsMessage = document.getElementById('resultsMessage');
         const resultsMascot = document.getElementById('resultsMascot');
+        const progressBar = document.getElementById('progressBar');
+        const repeatButton = document.getElementById('repeatButton');
 
         // Quiz state
         let currentQuestion = 0;
         let score = 0;
         let userAnswers = Array(quizData.length).fill(null);
         let answered = false;
+        let wrongQuestions = [];
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         // Initialize the quiz
         function initQuiz() {
+            // Load progress from localStorage
+            const savedProgress = localStorage.getItem('quizProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                currentQuestion = progress.currentQuestion || 0;
+                score = progress.score || 0;
+                userAnswers = progress.userAnswers || Array(quizData.length).fill(null);
+                wrongQuestions = progress.wrongQuestions || [];
+            }
+            
             loadQuestion(currentQuestion);
+            updateProgressBar();
         }
 
         // Load a question
@@ -534,6 +730,21 @@
                 const button = document.createElement('button');
                 button.className = 'option';
                 button.textContent = option;
+                
+                // If this question was already answered, show the correct/wrong state
+                if (userAnswers[currentQuestion] !== null) {
+                    button.disabled = true;
+                    if (option === userAnswers[currentQuestion]) {
+                        button.style.backgroundColor = option === question.correct ? '#3B8C59' : '#C8102E';
+                        button.style.color = 'white';
+                    }
+                    if (option === question.correct) {
+                        button.style.backgroundColor = '#3B8C59';
+                        button.style.color = 'white';
+                    }
+                    answered = true;
+                }
+                
                 button.addEventListener('click', () => selectAnswer(option, question.correct));
                 optionsContainer.appendChild(button);
             });
@@ -546,6 +757,12 @@
             // Play audio at default speed
             currentAudio.playbackRate = 1;
             speedSelect.value = '1';
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Save progress to localStorage
+            saveProgress();
         }
 
         // Handle answer selection
@@ -579,7 +796,41 @@
                 feedback.textContent = 'INCORRETO';
                 feedback.className = 'feedback incorrect';
                 errorSound.play();
+                // Add to wrong questions if not already there
+                if (!wrongQuestions.includes(currentQuestion)) {
+                    wrongQuestions.push(currentQuestion);
+                }
             }
+            
+            // Save progress to localStorage
+            saveProgress();
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const answeredQuestions = userAnswers.filter(answer => answer !== null).length;
+            const progress = (answeredQuestions / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {
+                currentQuestion,
+                score,
+                userAnswers,
+                wrongQuestions
+            };
+            localStorage.setItem('quizProgress', JSON.stringify(progress));
+        }
+
+        // Clear progress
+        function clearProgress() {
+            localStorage.removeItem('quizProgress');
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = Array(quizData.length).fill(null);
+            wrongQuestions = [];
         }
 
         // Navigation functions
@@ -636,6 +887,44 @@
             resultsPage.classList.add('fade-in');
         }
 
+        // Repeat wrong questions
+        function repeatWrongQuestions() {
+            buttonSound.play();
+            
+            if (wrongQuestions.length === 0) {
+                resultsMessage.textContent = "Você não errou nenhuma questão! Parabéns!";
+                return;
+            }
+            
+            // Create a new quiz data array with only wrong questions
+            const newQuizData = wrongQuestions.map(index => quizData[index]);
+            
+            // Reset state for the new quiz
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = Array(newQuizData.length).fill(null);
+            answered = false;
+            
+            // Replace the quiz data temporarily
+            const originalQuizData = [...quizData];
+            quizData.length = 0;
+            Array.prototype.push.apply(quizData, newQuizData);
+            
+            // Go back to quiz page
+            resultsPage.style.display = 'none';
+            page3.style.display = 'flex';
+            
+            // Load first wrong question
+            loadQuestion(0);
+            
+            // Restore original quiz data after finishing
+            window.finishWrongQuestions = function() {
+                quizData.length = 0;
+                Array.prototype.push.apply(quizData, originalQuizData);
+                delete window.finishWrongQuestions;
+            };
+        }
+
         // Event listeners
         introVideo.addEventListener('ended', () => {
             introVideo.style.opacity = '0';
@@ -658,18 +947,59 @@
         nextButton.addEventListener('click', goToNextQuestion);
 
         playButton.addEventListener('click', () => {
-            // Removed button sound for play audio
             currentAudio.play();
+            playButton.classList.add('audio-playing');
+            setTimeout(() => {
+                playButton.classList.remove('audio-playing');
+            }, currentAudio.duration * 1000);
         });
 
         stopButton.addEventListener('click', () => {
             buttonSound.play();
             currentAudio.pause();
             currentAudio.currentTime = 0;
+            playButton.classList.remove('audio-playing');
         });
 
         speedSelect.addEventListener('change', () => {
             currentAudio.playbackRate = parseFloat(speedSelect.value);
+        });
+
+        repeatButton.addEventListener('click', repeatWrongQuestions);
+
+        // Touch events for mobile swipe navigation
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe left - next question
+                if (!nextButton.disabled) {
+                    goToNextQuestion();
+                }
+            } else if (touchEndX > touchStartX + 50) {
+                // Swipe right - previous question
+                if (!backButton.disabled) {
+                    goToPreviousQuestion();
+                }
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (page3.style.display === 'flex') {
+                if (e.key === 'ArrowRight' && !nextButton.disabled) {
+                    goToNextQuestion();
+                } else if (e.key === 'ArrowLeft' && !backButton.disabled) {
+                    goToPreviousQuestion();
+                }
+            }
         });
 
         // Start the intro video with audio
