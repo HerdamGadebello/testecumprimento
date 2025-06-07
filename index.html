@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprenda Francês</title>
-    <link href="https://fonts.googleapis.com/css2?family=Franklin+Gothic+Demi&family=Franklin+Gothic+Heavy&family=Poppins&family=Rockwell&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Rockwell&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            font-display: swap;
         }
 
         body {
@@ -26,6 +27,7 @@
             height: 100%;
             background-color: #062250;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -36,6 +38,10 @@
             max-height: 80%;
             opacity: 1;
             transition: opacity 0.5s ease-out;
+        }
+
+        #skip-intro {
+            margin-top: 20px;
         }
 
         /* Página 02 - Início */
@@ -61,7 +67,6 @@
             border-radius: 50px;
             padding: 15px 30px;
             font-size: 1.5rem;
-            font-family: 'Franklin Gothic Demi', sans-serif;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -93,10 +98,9 @@
         .exercise-container {
             background-color: #002F6C;
             border-radius: 20px;
-            width: 90%;
-            max-width: 800px;
-            padding: 30px;
-            margin-top: 80px;
+            width: min(90%, 800px);
+            padding: 1.5rem;
+            margin-top: 5rem;
             position: relative;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
@@ -115,7 +119,6 @@
         }
 
         .french-word {
-            font-family: 'Franklin Gothic Heavy', sans-serif;
             font-size: 2.5rem;
             text-align: center;
             margin: 20px 0;
@@ -171,6 +174,10 @@
             cursor: pointer;
         }
 
+        .speed-control button[aria-pressed="true"] {
+            background-color: #3B8C59;
+        }
+
         .options-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -181,6 +188,18 @@
         @media (max-width: 600px) {
             .options-container {
                 grid-template-columns: 1fr;
+            }
+            .exercise-container {
+                padding: 1rem;
+                margin-top: 3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-btn {
+                width: 100%;
+                padding: 0.75rem;
             }
         }
 
@@ -229,13 +248,17 @@
             border: none;
             border-radius: 50px;
             padding: 10px 20px;
-            font-family: 'Franklin Gothic Demi', sans-serif;
             cursor: pointer;
             transition: transform 0.2s;
         }
 
         .nav-btn:hover {
             transform: translateY(-3px);
+        }
+
+        .nav-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
         }
 
         .mascot-small {
@@ -257,7 +280,6 @@
         }
 
         .result-title {
-            font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
@@ -295,11 +317,13 @@
 <body>
     <!-- Página de Introdução -->
     <div id="intro-page">
-        <video id="intro-video" autoplay>
+        <video id="intro-video" autoplay muted>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
+            <track kind="captions" src="captions.vtt" srclang="pt-BR" label="Português">
             Seu navegador não suporta o elemento de vídeo.
         </video>
-        <audio id="intro-audio" autoplay>
+        <button id="skip-intro" class="start-button" aria-label="Pular introdução">Pular Introdução</button>
+        <audio id="intro-audio" preload="auto">
             <source src="SOMINTRO.mp3" type="audio/mp3">
             Seu navegador não suporta o elemento de áudio.
         </audio>
@@ -307,13 +331,13 @@
 
     <!-- Página 02 - Início -->
     <div id="start-page">
-        <img id="mascot-neutral" src="MASCOTENEUTRO.png" alt="Mascote">
-        <button id="start-exercise" class="start-button">INICIAR EXERCÍCIO</button>
+        <img id="mascot-neutral" src="MASCOTENEUTRO.png" alt="Mascote neutro do curso">
+        <button id="start-exercise" class="start-button" aria-label="Iniciar exercício">INICIAR EXERCÍCIO</button>
     </div>
 
     <!-- Página do Exercício -->
     <div id="exercise-page">
-        <img class="logo" src="LOGODAMIAO.png" alt="Logo">
+        <img class="logo" src="LOGODAMIAO.png" alt="Logotipo do curso de francês">
         
         <div class="exercise-container">
             <div class="question-header">
@@ -321,11 +345,11 @@
             </div>
             
             <div class="audio-controls">
-                <button class="audio-btn" id="play-audio">▶</button>
+                <button class="audio-btn" id="play-audio" aria-label="Reproduzir áudio da palavra">▶</button>
                 <div class="speed-control">
-                    <button id="slow-speed">0.5x</button>
-                    <button id="normal-speed">1x</button>
-                    <button id="fast-speed">1.5x</button>
+                    <button id="slow-speed" aria-pressed="false">0.5x</button>
+                    <button id="normal-speed" aria-pressed="true">1x</button>
+                    <button id="fast-speed" aria-pressed="false">1.5x</button>
                 </div>
             </div>
             
@@ -338,11 +362,11 @@
             <div class="feedback" id="feedback"></div>
             
             <div class="navigation-buttons">
-                <button class="nav-btn" id="prev-btn">VOLTAR</button>
-                <button class="nav-btn" id="next-btn">AVANÇAR</button>
+                <button class="nav-btn" id="prev-btn" aria-label="Voltar para a questão anterior">VOLTAR</button>
+                <button class="nav-btn" id="next-btn" aria-label="Avançar para a próxima questão">AVANÇAR</button>
             </div>
             
-            <img class="mascot-small" src="MASCOTENINHO.png" alt="Mascote pequeno">
+            <img class="mascot-small" src="MASCOTENINHO.png" alt="Mascote pequeno do curso">
         </div>
     </div>
 
@@ -350,8 +374,9 @@
     <div id="results-page" style="display: none;">
         <div class="result-container">
             <h1 class="result-title" id="result-title">EXCELENTE</h1>
-            <p class="result-message" id="result-message">Você acertou 10, continue assim, um excelente resultado</p>
-            <img class="result-mascot" id="result-mascot" src="MASCOTEFELIZ.png" alt="Mascote feliz">
+            <p class="result-message" id="result-message"></p>
+            <button id="restart-exercise" class="start-button" aria-label="Reiniciar exercício">Reiniciar Exercício</button>
+            <img class="result-mascot" id="result-mascot" src="MASCOTEFELIZ.png" alt="Mascote feliz do curso">
         </div>
     </div>
 
@@ -361,12 +386,16 @@
     <audio id="button-sound" src="BUTTON.mp3"></audio>
     <audio id="positive-sound" src="POSITIVO.mp3"></audio>
     <audio id="negative-sound" src="NEGATIVO.mp3"></audio>
-    <audio id="current-audio"></audio>
+    <audio id="current-audio">
+        <source src="" type="audio/mp3">
+        <source src="" type="audio/mp4">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
 
     <script>
         // Dados das palavras em francês e suas traduções
         const frenchWords = [
-            { french: "Bonjour", audio: "bonjour.m4a", correct: "Bom dia", incorrects: ["Boa noite", "Obrigado", "Tchau"] },
+            { french: "Bonjour", audio: "bonjour.mp3", correct: "Bom dia", incorrects: ["Boa noite", "Obrigado", "Tchau"] },
             { french: "Salut", audio: "salut.mp3", correct: "Olá", incorrects: ["Obrigado", "Por favor", "De nada"] },
             { french: "Merci", audio: "merci.mp3", correct: "Obrigado(a)", incorrects: ["Por favor", "Bom dia", "Tchau"] },
             { french: "Coucou", audio: "coucou.mp3", correct: "Oi, Oie, Oizinho", incorrects: ["Bom dia", "Boa noite", "Até logo"] },
@@ -394,6 +423,7 @@
         // Elementos DOM
         const introPage = document.getElementById('intro-page');
         const introVideo = document.getElementById('intro-video');
+        const introAudio = document.getElementById('intro-audio');
         const startPage = document.getElementById('start-page');
         const exercisePage = document.getElementById('exercise-page');
         const resultsPage = document.getElementById('results-page');
@@ -420,12 +450,44 @@
 
         // Event Listeners
         document.getElementById('start-exercise').addEventListener('click', startExercise);
+        document.getElementById('skip-intro').addEventListener('click', showStartPage);
         prevBtn.addEventListener('click', goToPreviousQuestion);
         nextBtn.addEventListener('click', goToNextQuestion);
         playAudioBtn.addEventListener('click', playCurrentAudio);
         slowSpeedBtn.addEventListener('click', () => setPlaybackSpeed(0.5));
         normalSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1));
         fastSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1.5));
+        document.getElementById('restart-exercise').addEventListener('click', restartExercise);
+
+        // Sincronização de vídeo e áudio
+        introVideo.addEventListener('play', () => {
+            introAudio.play().catch(() => {
+                feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
+                feedbackElement.className = 'feedback incorrect';
+            });
+        });
+        introVideo.addEventListener('ended', showStartPage);
+        introVideo.addEventListener('error', () => {
+            console.error('Erro ao carregar o vídeo de introdução');
+            feedbackElement.textContent = 'Erro ao carregar o vídeo de introdução.';
+            feedbackElement.className = 'feedback incorrect';
+            showStartPage();
+        });
+        introAudio.addEventListener('error', () => {
+            console.error('Erro ao carregar o áudio de introdução');
+            feedbackElement.textContent = 'Erro ao carregar o áudio de introdução.';
+            feedbackElement.className = 'feedback incorrect';
+        });
+
+        // Suporte a navegação por teclado
+        optionsContainer.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                const target = event.target;
+                if (target.classList.contains('option-btn')) {
+                    target.click();
+                }
+            }
+        });
 
         // Função para embaralhar array
         function shuffleArray(array) {
@@ -436,22 +498,21 @@
             return array;
         }
 
-        // Inicialização do vídeo de introdução
-        introVideo.addEventListener('ended', function() {
-            // Fade out do vídeo
+        // Mostra a página inicial
+        function showStartPage() {
+            introVideo.pause();
+            introAudio.pause();
             introVideo.style.opacity = '0';
-            
-            // Esconde a página de introdução após o fade out
             setTimeout(() => {
                 introPage.style.display = 'none';
                 startPage.style.display = 'flex';
             }, 500);
-        });
+        }
 
         // Reproduz som de botão
         function playButtonSound() {
             buttonSound.currentTime = 0;
-            buttonSound.play();
+            buttonSound.play().catch(() => console.error('Erro ao reproduzir som de botão'));
         }
 
         // Inicia o exercício
@@ -472,8 +533,16 @@
             feedbackElement.className = 'feedback';
             
             // Carrega o áudio
-            currentAudio.src = question.audio;
+            const audioSources = currentAudio.querySelectorAll('source');
+            audioSources[0].src = question.audio;
+            audioSources[1].src = question.audio.replace('.mp3', '.m4a');
+            currentAudio.load();
             currentAudio.playbackRate = audioPlaybackRate;
+            
+            currentAudio.addEventListener('error', () => {
+                feedbackElement.textContent = 'Erro ao carregar o áudio. Tente novamente.';
+                feedbackElement.className = 'feedback incorrect';
+            }, { once: true });
             
             // Cria opções embaralhadas
             const options = shuffleArray([question.correct, ...question.incorrects]);
@@ -483,6 +552,7 @@
                 const optionBtn = document.createElement('button');
                 optionBtn.className = 'option-btn slide-in';
                 optionBtn.textContent = option;
+                optionBtn.setAttribute('aria-label', `Opção: ${option}`);
                 optionBtn.addEventListener('click', () => checkAnswer(option, question.correct));
                 optionsContainer.appendChild(optionBtn);
             });
@@ -507,11 +577,11 @@
                 score++;
                 feedbackElement.textContent = 'CORRETO';
                 feedbackElement.className = 'feedback correct';
-                winSound.play();
+                winSound.play().catch(() => console.error('Erro ao reproduzir som de acerto'));
             } else {
                 feedbackElement.textContent = 'INCORRETO';
                 feedbackElement.className = 'feedback incorrect';
-                errorSound.play();
+                errorSound.play().catch(() => console.error('Erro ao reproduzir som de erro'));
             }
             
             // Desabilita todas as opções após responder
@@ -533,7 +603,10 @@
         // Reproduz o áudio atual
         function playCurrentAudio() {
             currentAudio.currentTime = 0;
-            currentAudio.play();
+            currentAudio.play().catch(() => {
+                feedbackElement.textContent = 'Erro ao reproduzir o áudio.';
+                feedbackElement.className = 'feedback incorrect';
+            });
         }
 
         // Define a velocidade de reprodução
@@ -541,10 +614,13 @@
             audioPlaybackRate = speed;
             currentAudio.playbackRate = speed;
             
-            // Atualiza estilos dos botões de velocidade
             slowSpeedBtn.style.backgroundColor = speed === 0.5 ? '#3B8C59' : '#002F6C';
             normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59' : '#002F6C';
             fastSpeedBtn.style.backgroundColor = speed === 1.5 ? '#3B8C59' : '#002F6C';
+            
+            slowSpeedBtn.setAttribute('aria-pressed', speed === 0.5);
+            normalSpeedBtn.setAttribute('aria-pressed', speed === 1);
+            fastSpeedBtn.setAttribute('aria-pressed', speed === 1.5);
         }
 
         // Navega para a questão anterior
@@ -562,8 +638,11 @@
             if (currentQuestion < frenchWords.length - 1) {
                 currentQuestion++;
                 loadQuestion(currentQuestion);
-            } else {
+            } else if (userAnswers.length === frenchWords.length) {
                 showResults();
+            } else {
+                feedbackElement.textContent = 'Por favor, responda todas as questões antes de continuar.';
+                feedbackElement.className = 'feedback incorrect';
             }
         }
 
@@ -576,25 +655,36 @@
             
             if (percentage >= 95) {
                 resultTitle.textContent = 'EXCELENTE';
-                resultMessage.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
+                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}! Parabéns pelo desempenho excepcional!`;
                 resultMascot.src = 'MASCOTEFELIZ.png';
-                positiveSound.play();
+                positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
             } else if (percentage >= 75) {
                 resultTitle.textContent = 'PARABÉNS';
-                resultMessage.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
+                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Bom trabalho, continue praticando!`;
                 resultMascot.src = 'MASCOTEALEGRE.png';
-                positiveSound.play();
+                positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
             } else if (percentage >= 60) {
                 resultTitle.textContent = 'QUASE LÁ';
-                resultMessage.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
+                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Está no caminho certo, mas pode melhorar!`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play();
+                negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
             } else {
-                resultTitle.textContent = 'NÃO FOI DESSA VEZ';
-                resultMessage.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
+                resultTitle.textContent = 'TENTE NOVAMENTE';
+                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Que tal revisar e tentar de novo?`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play();
+                negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
             }
+        }
+
+        // Reinicia o exercício
+        function restartExercise() {
+            playButtonSound();
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            resultsPage.style.display = 'none';
+            exercisePage.style.display = 'flex';
+            loadQuestion(currentQuestion);
         }
 
         // Inicializa a velocidade de reprodução
