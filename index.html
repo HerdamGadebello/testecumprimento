@@ -13,7 +13,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #296CA6;
+            background-color: #F5F1E7;
             font-family: 'Poppins', sans-serif;
             position: relative;
         }
@@ -26,7 +26,7 @@
         }
 
         .container {
-            background-color: #F5F1E7;
+            background-color: #296CA6;
             border-radius: 20px;
             padding: 40px;
             width: 600px;
@@ -224,6 +224,7 @@
             wordElement.textContent = q.word;
             audio.src = q.audio;
             audio.playbackRate = parseFloat(playbackSpeed.value);
+            audio.onerror = () => console.error(`Erro ao carregar áudio: ${q.audio}`);
             optionsElement.innerHTML = '';
             resultElement.textContent = '';
             answered = false;
@@ -251,11 +252,11 @@
                 score++;
                 resultElement.textContent = 'CORRETO';
                 resultElement.style.color = '#4CAF50';
-                winSound.play();
+                winSound.play().catch(e => console.error(`Erro ao tocar WIN.wav: ${e}`));
             } else {
                 resultElement.textContent = 'INCORRETO';
                 resultElement.style.color = '#f44336';
-                errorSound.play();
+                errorSound.play().catch(e => console.error(`Erro ao tocar ERROR.wav: ${e}`));
             }
 
             document.querySelectorAll('.option').forEach(opt => {
@@ -271,7 +272,7 @@
         }
 
         function playButtonSound() {
-            buttonSound.play();
+            buttonSound.play().catch(e => console.error(`Erro ao tocar BUTTON.wav: ${e}`));
         }
 
         function prevQuestion() {
