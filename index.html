@@ -27,8 +27,9 @@
 <body class="bg-[#F4F1EC] min-h-screen flex flex-col items-center justify-center font-['Poppins',_sans-serif]">
     <!-- Intro Video Section -->
     <div id="intro-section" class="fixed inset-0 bg-[#062250] flex items-center justify-center z-50">
-        <video id="intro-video" class="w-3/4 md:w-1/2 lg:w-1/3" autoplay>
+        <video id="intro-video" class="w-3/4 md:w-1/2 lg:w-1/3" autoplay playsinline muted>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
         </video>
     </div>
 
@@ -99,10 +100,12 @@
             { word: "Pardon", audio: "pardon.mp3", correct: "Desculpa", options: ["Desculpa", "Obrigado(a)", "Por favor", "De nada"] },
             { word: "De rien", audio: "de rien.mp3", correct: "De nada", options: ["De nada", "Por favor", "Desculpa", "Obrigado(a)"] },
             { word: "À bientôt", audio: "à bientôt.mp3", correct: "Até breve", options: ["Até breve", "Tchau", "Boa noite", "Bom dia"] },
-            { word: "Au revoir", audio: "au revoir.mp3", correct: "Tchau", options: ["Tchau", "Oi", "Boa tarde", "Por favor"] },
+            { wordავ
+
+            { word: "Au revoir", audio: "au revoir.mp3", correct: "Tchau", options: ["Tchau", "Oi", "Bo彼此
+
             { word: "Bonne nuit", audio: "bonne nuit.mp3", correct: "Boa noite", options: ["Boa noite", "Bom dia", "Olá", "Tchau"] },
             { word: "Bonne soirée", audio: "bonne soirée.mp3", correct: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Boa tarde", "Bom dia", "Olá"] },
-            { word: "Bonsoir", audio: "bonsoir.mp3", correct: "Boa noite", options: ["Boa noite", "Bom dia", "Olá", "Tchau"] },
             { word: "Bonne journée", audio: "bonne journée.mp3", correct: "Tenha um bom dia", options: ["Tenha um bom dia", "Boa noite", "Olá", "Tchau"] },
             { word: "Bon après-midi", audio: "bon après midi.mp3", correct: "Boa tarde", options: ["Boa tarde", "Bom dia", "Olá", "Tchau"] },
             { word: "Moi, c'est...", audio: "moi c'est.mp3", correct: "Eu sou", options: ["Eu sou", "Eu me chamo", "Por favor", "Obrigado(a)"] },
@@ -198,8 +201,36 @@
             }, 500);
         }
 
-        // Event Listeners
-        document.getElementById("intro-video").addEventListener("ended", () => {
+        // Video Autoplay Handling
+        const video = document.getElementById("intro-video");
+        video.muted = true; // Start muted to comply with autoplay policies
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    // Autoplay succeeded, unmute after a short delay
+                    setTimeout(() => {
+                        video.muted = false;
+                    }, 100);
+                })
+                .catch(error => {
+                    console.log("Autoplay failed: ", error);
+                    // Fallback: Show a play button overlay
+                    const playButton = document.createElement("button");
+                    playButton.textContent = "Tocar Vídeo";
+                    playButton.className = "bg-[#3B8C59] text-white font-['Poppins'] px-6 py-2 rounded-full hover:bg-[#2E6C00] transition-colors absolute";
+                    document.getElementById("intro-section").appendChild(playButton);
+                    playButton.addEventListener("click", () => {
+                        video.muted = false;
+                        video.play();
+                        playButton.remove();
+                    });
+                });
+        }
+
+        // Video end handling
+        video.addEventListener("ended", () => {
             document.getElementById("intro-section").classList.add("fade-out");
             setTimeout(() => {
                 document.getElementById("intro-section").classList.add("hidden");
@@ -208,6 +239,7 @@
             }, 500);
         });
 
+        // Other Event Listeners
         document.getElementById("start-button").addEventListener("click", () => {
             document.getElementById("start-page").classList.add("fade-out");
             setTimeout(() => {
