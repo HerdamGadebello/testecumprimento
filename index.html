@@ -473,6 +473,7 @@
         let score = 0;
         let userAnswers = [];
         let audioPlaybackRate = 1;
+        let isAudioInitialized = false;
 
         // Elementos DOM
         const introPage = document.getElementById('intro-page');
@@ -511,23 +512,38 @@
         normalSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1));
         fastSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1.5));
 
-        // Forçar reprodução do áudio de introdução após carregamento
-        window.addEventListener('load', () => {
-            introAudio.play().catch((error) => {
-                console.error('Erro ao reproduzir o áudio de introdução:', error);
-                feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
-                feedbackElement.className = 'feedback incorrect';
-            });
-        });
+        // Desbloqueia áudio após interação do usuário
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        function unlockAudio() {
+            if (!isAudioInitialized) {
+                // Tenta carregar e reproduzir um áudio silencioso para desbloquear o contexto de áudio
+                const silentAudio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
+                silentAudio.play().catch(() => {});
+                isAudioInitialized = true;
+                // Tenta reproduzir áudio de introdução
+                if (introPage.style.display !== 'none') {
+                    introAudio.play().catch((error) => {
+                        console.error('Erro ao reproduzir áudio de introdução:', error);
+                        feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
+                        feedbackElement.className = 'feedback incorrect';
+                    });
+                }
+            }
+        }
 
         // Sincronização de vídeo e áudio
         introVideo.addEventListener('play', () => {
-            introAudio.play().catch((error) => {
-                console.error('Erro ao reproduzir o áudio de introdução:', error);
-                feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
-                feedbackElement.className = 'feedback incorrect';
-            });
+            if (isAudioInitialized) {
+                introAudio.play().catch((error) => {
+                    console.error('Erro ao reproduzir áudio de introdução:', error);
+                    feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
+                    feedbackElement.className = 'feedback incorrect';
+                });
+            }
         });
+
         introVideo.addEventListener('ended', showStartPage);
         introVideo.addEventListener('error', () => {
             console.error('Erro ao carregar o vídeo de introdução');
@@ -535,6 +551,7 @@
             feedbackElement.className = 'feedback incorrect';
             showStartPage();
         });
+
         introAudio.addEventListener('error', () => {
             console.error('Erro ao carregar o áudio de introdução');
             feedbackElement.textContent = 'Erro ao carregar o áudio de introdução.';
@@ -573,10 +590,12 @@
 
         // Reproduz som de botão
         function playButtonSound() {
-            buttonSound.currentTime = 0;
-            buttonSound.play().catch((error) => {
-                console.error('Erro ao reproduzir som de botão:', error);
-            });
+            if (isAudioInitialized) {
+                buttonSound.currentTime = 0;
+                buttonSound.play().catch((error) => {
+                    console.error('Erro ao reproduzir som de botão:', error);
+                });
+            }
         }
 
         // Inicia o exercício
@@ -595,25 +614,30 @@
             frenchWordElement.textContent = question.french;
             feedbackElement.textContent = '';
             feedbackElement.className = 'feedback';
-            
+
             // Carrega o áudio
             const audioSource = currentAudio.querySelector('source');
             audioSource.src = question.audio;
             currentAudio.load();
             currentAudio.playbackRate = audioPlaybackRate;
-            
+
             currentAudio.addEventListener('error', () => {
                 feedbackElement.textContent = 'Erro ao carregar o áudio da palavra.';
                 feedbackElement.className = 'feedback incorrect';
             }, { once: true });
-            
-            // Tenta reproduzir o áudio automaticamente
-            currentAudio.play().catch((error) => {
-                console.error('Erro ao reproduzir áudio da palavra:', error);
+
+            // Tenta reproduzir o áudio automaticamente após interação do usuário
+            if (isAudioInitialized) {
+                currentAudio.play().catch((error) => {
+                    console.error('Erro ao reproduzir áudio da palavra:', error);
+                    feedbackElement.textContent = 'Clique no botão de reprodução para ouvir a palavra.';
+                    feedbackElement.className = 'feedback incorrect';
+                });
+            } else {
                 feedbackElement.textContent = 'Clique no botão de reprodução para ouvir a palavra.';
-                feedbackElement.className = 'feedback incorrect';
-            });
-            
+                feedbackElement.className = 'feedback';
+            }
+
             // Cria opções embaralhadas
             const options = shuffleArray([question.correct, ...question.incorrects]);
             
@@ -626,11 +650,11 @@
                 optionBtn.addEventListener('click', () => checkAnswer(option, question.correct));
                 optionsContainer.appendChild(optionBtn);
             });
-            
+
             // Atualiza botões de navegação
             prevBtn.disabled = index === 0;
             nextBtn.disabled = userAnswers[index] === undefined;
-            
+
             // Adiciona animação
             frenchWordElement.classList.add('fade-in');
             optionsContainer.classList.add('fade-in');
@@ -651,17 +675,21 @@
                 score++;
                 feedbackElement.textContent = 'CORRETO';
                 feedbackElement.className = 'feedback correct';
-                winSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som de acerto:', error);
-                });
+                if (isAudioInitialized) {
+                    winSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som de acerto:', error);
+                    });
+                }
             } else {
                 feedbackElement.textContent = 'INCORRETO';
                 feedbackElement.className = 'feedback incorrect';
-                errorSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som de erro:', error);
-                });
+                if (isAudioInitialized) {
+                    errorSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som de erro:', error);
+                    });
+                }
             }
-            
+
             // Desabilita todas as opções após responder
             const optionButtons = document.querySelectorAll('.option-btn');
             optionButtons.forEach(btn => {
@@ -674,18 +702,23 @@
                     btn.style.color = 'white';
                 }
             });
-            
+
             nextBtn.disabled = false;
         }
 
         // Reproduz o áudio atual
         function playCurrentAudio() {
-            currentAudio.currentTime = 0;
-            currentAudio.play().catch((error) => {
-                console.error('Erro ao reproduzir áudio:', error);
-                feedbackElement.textContent = 'Erro ao reproduzir o áudio.';
+            if (isAudioInitialized) {
+                currentAudio.currentTime = 0;
+                currentAudio.play().catch((error) => {
+                    console.error('Erro ao reproduzir áudio:', error);
+                    feedbackElement.textContent = 'Erro ao reproduzir o áudio.';
+                    feedbackElement.className = 'feedback incorrect';
+                });
+            } else {
+                feedbackElement.textContent = 'Áudio não inicializado. Interaja com a página primeiro.';
                 feedbackElement.className = 'feedback incorrect';
-            });
+            }
         }
 
         // Define a velocidade de reprodução
@@ -694,7 +727,7 @@
             currentAudio.playbackRate = speed;
             
             slowSpeedBtn.style.backgroundColor = speed === 0.5 ? '#3B8C59' : '#002F6C';
-            normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59' : '#002F6C';
+            normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59 Eisenhower: none; transform: translateY(-3px); }
             fastSpeedBtn.style.backgroundColor = speed === 1.5 ? '#3B8C59' : '#002F6C';
             
             slowSpeedBtn.setAttribute('aria-pressed', speed === 0.5);
@@ -733,30 +766,38 @@
                 resultTitle.textContent = 'EXCELENTE';
                 resultMessage.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
                 resultMascot.src = 'MASCOTEFELIZ.png';
-                positiveSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som positivo:', error);
-                });
+                if (isAudioInitialized) {
+                    positiveSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som positivo:', error);
+                    });
+                }
             } else if (percentage >= 75) {
                 resultTitle.textContent = 'PARABÉNS';
                 resultMessage.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
                 resultMascot.src = 'MASCOTEALEGRE.png';
-                positiveSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som positivo:', error);
-                });
+                if (isAudioInitialized) {
+                    positiveSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som positivo:', error);
+                    });
+                }
             } else if (percentage >= 60) {
                 resultTitle.textContent = 'QUASE LÁ';
                 resultMessage.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som negativo:', error);
-                });
+                if (isAudioInitialized) {
+                    negativeSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som negativo:', error);
+                    });
+                }
             } else {
                 resultTitle.textContent = 'NÃO FOI DESSA VEZ';
                 resultMessage.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
-                negativeSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som negativo:', error);
-                });
+                if (isAudioInitialized) {
+                    negativeSound.play().catch((error) => {
+                        console.error('Erro ao reproduzir som negativo:', error);
+                    });
+                }
             }
         }
 
