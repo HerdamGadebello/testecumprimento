@@ -3,46 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Francês</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Rockwell&family=Franklin+Gothic+Medium&display=swap" rel="stylesheet">
+    <title>Teste de Tradução de Francês</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Rockwell&family=Franklin+Gothic+Demi&display=swap" rel="stylesheet">
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
+            height: 100%;
             font-family: 'Poppins', sans-serif;
-            background-color: #F4F1EC;
             overflow: hidden;
+        }
+        #intro {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background-color: #F1E1AC;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         #intro-video {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            z-index: 1000;
+            z-index: 10;
         }
-        #intro-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #F1E1AC;
-            text-align: center;
-        }
-        #mascot-intro {
+        #mascot {
             width: 40%;
-            max-width: 500px;
+            max-width: 400px;
             margin-bottom: 20px;
         }
         #start-button {
-            padding: 20px 40px;
-            background-color: #002F6C;
-            color: white;
-            font-family: 'Franklin Gothic Demi', sans-serif;
+            padding: 15px 40px;
             font-size: 24px;
+            font-family: 'Franklin Gothic Demi', sans-serif;
+            color: white;
+            background-color: #002F6C;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -51,26 +54,23 @@
         }
         #quiz-container {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             position: relative;
-        }
-        #logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 150px;
+            height: 100vh;
+            width: 100%;
+            background-color: #F4F1EC;
         }
         #quiz-box {
-            background-color: #002F6C;
-            border-radius: 20px;
-            padding: 40px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 80%;
             max-width: 800px;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background-color: #002F6C;
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            text-align: center;
         }
         #mascot-ninho {
             position: absolute;
@@ -78,55 +78,55 @@
             left: 10px;
             width: 100px;
         }
+        #logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+        }
         #question-header {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: #C8102E;
             color: white;
             font-family: 'Rockwell', serif;
             font-size: 20px;
-            padding: 15px;
-            border-radius: 50px;
-            text-align: center;
+            padding: 15px 30px;
+            border-radius: 25px;
             width: 80%;
-            margin: -70px auto 20px;
+            max-width: 600px;
+            text-align: center;
             line-height: 1.4;
         }
-        #word-audio {
-            display: block;
-            margin: 20px auto;
-        }
-        #word-audio::-webkit-media-controls-panel {
-            background-color: #F5C84C;
-        }
-        #speed-control {
-            display: block;
-            margin: 10px auto;
-            padding: 5px;
-            background-color: #F5C84C;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Poppins', sans-serif;
-        }
-        #french-word {
-            font-family: 'Franklin Gothic Heavy', sans-serif;
+        #word {
+            font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 36px;
             color: black;
-            text-align: center;
             margin: 20px 0;
+        }
+        #audio-controls {
+            margin: 10px 0;
+        }
+        #speed-control {
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            margin-left: 10px;
         }
         #options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin: 20px 0;
         }
         .option {
-            background-color: #C6B9DD;
+            background-color: #F5C84C;
             color: black;
             font-family: 'Poppins', sans-serif;
             font-size: 18px;
             padding: 15px;
             border-radius: 15px;
-            text-align: center;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -134,14 +134,10 @@
             background-color: #10C894;
         }
         #feedback {
-            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 24px;
-            color: #3B8C59;
-            text-align: center;
             margin: 20px 0;
-        }
-        #feedback.incorrect {
-            color: #C8102E;
+            color: #F5C84C;
         }
         #navigation {
             display: flex;
@@ -149,13 +145,13 @@
             margin-top: 20px;
         }
         .nav-button {
-            padding: 15px 30px;
-            background-color: #3B8C59;
-            color: white;
+            padding: 10px 30px;
             font-family: 'Poppins', sans-serif;
             font-size: 18px;
+            color: white;
+            background-color: #3B8C59;
             border: none;
-            border-radius: 50px;
+            border-radius: 15px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -164,24 +160,22 @@
         }
         #result-container {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        #result-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
             background-color: #C8102E;
             border-radius: 20px;
-            padding: 40px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
+            padding: 20px;
             color: white;
+            text-align: center;
+            font-family: 'Franklin Gothic Demi', sans-serif;
         }
         #result-title {
-            font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         #result-text {
             font-family: 'Poppins', sans-serif;
@@ -189,203 +183,196 @@
             margin-bottom: 20px;
         }
         #result-mascot {
-            width: 50%;
+            width: 40%;
             max-width: 400px;
-            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <video id="intro-video" src="VIDEOINTRO.mp4" autoplay muted></video>
-    <div id="intro-screen">
-        <img id="mascot-intro" src="MASCOTENEUTRO.png" alt="Mascote Neutro">
+    <div id="intro">
+        <video id="intro-video" src="VIDEOINTRO.mp4" autoplay></video>
+        <img id="mascot" src="MASCOTENEUTRO.png" alt="Mascote Neutro">
         <button id="start-button">INICIAR EXERCÍCIO</button>
     </div>
     <div id="quiz-container">
-        <img id="logo" src="LOGODAMIAO.png" alt="Logo Damiao">
+        <img id="logo" src="LOGODAMIAO.png" alt="Logo">
         <div id="quiz-box">
-            <img id="mascot-ninho" src="MASCOTENINHO.png" alt="Mascote Ninho">
             <div id="question-header">Escolha a alternativa que melhor traduz a seguinte palavra:</div>
-            <audio id="word-audio" controls></audio>
-            <select id="speed-control">
-                <option value="0.5">0.5x</option>
-                <option value="1" selected>1x</option>
-                <option value="1.5">1.5x</option>
-                <option value="2">2x</option>
-            </select>
-            <div id="french-word"></div>
+            <div id="audio-controls">
+                <audio id="word-audio" src=""></audio>
+                <button onclick="playAudio()">Tocar</button>
+                <select id="speed-control" onchange="changeSpeed()">
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+            <div id="word"></div>
             <div id="options"></div>
             <div id="feedback"></div>
-        </div>
-        <div id="navigation">
-            <button class="nav-button" id="back-button">VOLTAR</button>
-            <button class="nav-button" id="next-button">AVANÇAR</button>
+            <div id="navigation">
+                <button class="nav-button" id="back-button" onclick="playButtonSound(); prevQuestion()">VOLTAR</button>
+                <button class="nav-button" id="next-button" onclick="playButtonSound(); nextQuestion()">AVANÇAR</button>
+            </div>
+            <img id="mascot-ninho" src="MASCOTENINHO.png" alt="Mascote Ninho">
         </div>
     </div>
     <div id="result-container">
-        <div id="result-box">
-            <div id="result-title"></div>
-            <div id="result-text"></div>
-            <img id="result-mascot" src="" alt="Mascote Resultado">
-        </div>
+        <div id="result-title"></div>
+        <div id="result-text"></div>
+        <img id="result-mascot" src="" alt="Mascote Resultado">
     </div>
-    <audio id="button-sound" src="BUTTON.mp3"></audio>
-    <audio id="win-sound" src="WIN.wav"></audio>
-    <audio id="error-sound" src="ERROR.wav"></audio>
-    <audio id="positive-sound" src="POSITIVO.mp3"></audio>
-    <audio id="negative-sound" src="NEGATIVO.mp3"></audio>
+    <audio id="win-audio" src="WIN.wav"></audio>
+    <audio id="error-audio" src="ERROR.wav"></audio>
+    <audio id="button-audio" src="BUTTON.mp3"></audio>
+    <audio id="positivo-audio" src="POSITIVO.mp3"></audio>
+    <audio id="negativo-audio" src="NEGATIVO.mp3"></audio>
 
     <script>
         const questions = [
-            { word: "Bonjour", correct: "Bom dia", audio: "bonjour.m4a", options: ["Bom dia", "Boa noite", "Olá", "Tchau"] },
-            { word: "Salut", correct: "Olá", audio: "salut.mp3", options: ["Olá", "Bom dia", "Obrigado", "Por favor"] },
-            { word: "Merci", correct: "Obrigado(a)", audio: "merci.mp3", options: ["Obrigado(a)", "Desculpa", "De nada", "Até logo"] },
-            { word: "Coucou", correct: "Oi, Oie, Oizinho", audio: "coucou.mp3", options: ["Oi, Oie, Oizinho", "Boa tarde", "Tchau", "Perdão"] },
-            { word: "S'il te plaît", correct: "Por favor (uso informal)", audio: "s'il te plaît.mp3", options: ["Por favor (uso informal)", "Obrigado", "De nada", "Boa noite"] },
-            { word: "S'il vous plaît", correct: "Por favor (uso formal)", audio: "s'il vous plaît.mp3", options: ["Por favor (uso formal)", "Olá", "Desculpa", "Até breve"] },
-            { word: "Pardon", correct: "Perdão. Desculpa", audio: "pardon.mp3", options: ["Perdão. Desculpa", "Bom dia", "Obrigado", "Tchau"] },
-            { word: "De rien", correct: "De nada", audio: "de rien.mp3", options: ["De nada", "Por favor", "Boa tarde", "Olá"] },
-            { word: "À bientôt", correct: "Até breve. Até logo", audio: "à bientôt.mp3", options: ["Até breve. Até logo", "Boa noite", "Obrigado", "Desculpa"] },
-            { word: "Au revoir", correct: "Tchau. Nos vemos!", audio: "au revoir.mp3", options: ["Tchau. Nos vemos!", "Bom dia", "Por favor", "De nada"] },
-            { word: "Bonne nuit", correct: "Boa noite (despedida)", audio: "bonne nuit.mp3", options: ["Boa noite (despedida)", "Olá", "Obrigado", "Até logo"] },
-            { word: "Bonne soirée", correct: "Tenha uma boa noite", audio: "bonne soirée.mp3", options: ["Tenha uma boa noite", "Bom dia", "Desculpa", "Por favor"] },
-            { word: "Bonsoir", correct: "Boa noite (cumprimento)", audio: "bonsoir.mp3", options: ["Boa noite (cumprimento)", "Tchau", "Obrigado", "Olá"] },
-            { word: "Bonne journée", correct: "Tenha um bom dia", audio: "bonne journée.mp3", options: ["Tenha um bom dia", "Boa tarde", "De nada", "Perdão"] },
-            { word: "Bon après-midi", correct: "Boa tarde", audio: "bon après midi.mp3", options: ["Boa tarde", "Bom dia", "Obrigado", "Tchau"] },
-            { word: "Moi, c'est...", correct: "Eu sou (uso para se apresentar)", audio: "moi c'est.mp3", options: ["Eu sou (uso para se apresentar)", "Por favor", "Olá", "De nada"] },
-            { word: "Je m'appelle...", correct: "Eu me chamo", audio: "je m'apelle.mp3", options: ["Eu me chamo", "Boa noite", "Obrigado", "Desculpa"] }
+            { word: "Bonjour", correct: "Bom dia", options: ["Bom dia", "Boa noite", "Olá", "Tchau"], audio: "bonjour.m4a" },
+            { word: "Salut", correct: "Olá", options: ["Olá", "Bom dia", "Obrigado", "Por favor"], audio: "salut.mp3" },
+            { word: "Merci", correct: "Obrigado(a)", options: ["Obrigado(a)", "De nada", "Perdão", "Até logo"], audio: "merci.mp3" },
+            { word: "Coucou", correct: "Oi", options: ["Oi", "Boa noite", "Tchau", "Por favor"], audio: "coucou.mp3" },
+            { word: "S'il te plaît", correct: "Por favor", options: ["Por favor", "Obrigado", "De nada", "Olá"], audio: "s'il te plaît.mp3" },
+            { word: "S'il vous plaît", correct: "Por favor", options: ["Por favor", "Bom dia", "Perdão", "Tchau"], audio: "s'il vous plaît.mp3" },
+            { word: "Pardon", correct: "Perdão", options: ["Perdão", "Olá", "Obrigado", "De nada"], audio: "pardon.mp3" },
+            { word: "De rien", correct: "De nada", options: ["De nada", "Por favor", "Bom dia", "Tchau"], audio: "de rien.mp3" },
+            { word: "À bientôt", correct: "Até breve", options: ["Até breve", "Boa noite", "Olá", "Obrigado"], audio: "à bientôt.mp3" },
+            { word: "Au revoir", correct: "Tchau", options: ["Tchau", "Bom dia", "Por favor", "Perdão"], audio: "au revoir.mp3" },
+            { word: "Bonne nuit", correct: "Boa noite", options: ["Boa noite", "Bom dia", "Olá", "De nada"], audio: "bonne nuit.mp3" },
+            { word: "Bonne soirée", correct: "Tenha uma boa noite", options: ["Tenha uma boa noite", "Bom dia", "Por favor", "Tchau"], audio: "bonne soirée.mp3" },
+            { word: "Bonsoir", correct: "Boa noite", options: ["Boa noite", "Olá", "Obrigado", "Perdão"], audio: "bonsoir.mp3" },
+            { word: "Bonne journée", correct: "Tenha um bom dia", options: ["Tenha um bom dia", "Boa noite", "Por favor", "De nada"], audio: "bonne journée.mp3" },
+            { word: "Bon après-midi", correct: "Boa tarde", options: ["Boa tarde", "Bom dia", "Olá", "Tchau"], audio: "bon après midi.mp3" },
+            { word: "Moi, c'est...", correct: "Eu sou", options: ["Eu sou", "Boa noite", "Obrigado", "Por favor"], audio: "moi c'est.mp3" },
+            { word: "Je m'appelle...", correct: "Eu me chamo", options: ["Eu me chamo", "Bom dia", "Perdão", "De nada"], audio: "je m'apelle.mp3" }
         ];
 
         let currentQuestion = 0;
         let score = 0;
-        let answered = false;
+        let selectedOption = null;
 
-        const video = document.getElementById('intro-video');
-        const introScreen = document.getElementById('intro-screen');
-        const quizContainer = document.getElementById('quiz-container');
-        const resultContainer = document.getElementById('result-container');
-        const startButton = document.getElementById('start-button');
-        const wordAudio = document.getElementById('word-audio');
-        const speedControl = document.getElementById('speed-control');
-        const frenchWord = document.getElementById('french-word');
-        const optionsDiv = document.getElementById('options');
-        const feedbackDiv = document.getElementById('feedback');
-        const backButton = document.getElementById('back-button');
-        const nextButton = document.getElementById('next-button');
-        const buttonSound = document.getElementById('button-sound');
-        const winSound = document.getElementById('win-sound');
-        const errorSound = document.getElementById('error-sound');
-        const positiveSound = document.getElementById('positive-sound');
-        const negativeSound = document.getElementById('negative-sound');
-        const resultTitle = document.getElementById('result-title');
-        const resultText = document.getElementById('result-text');
-        const resultMascot = document.getElementById('result-mascot');
+        document.getElementById('intro-video').addEventListener('ended', () => {
+            document.getElementById('intro-video').style.display = 'none';
+        });
 
-        video.onended = () => {
-            video.style.display = 'none';
-            introScreen.style.display = 'flex';
-        };
-
-        startButton.onclick = () => {
-            buttonSound.play();
-            introScreen.style.display = 'none';
-            quizContainer.style.display = 'flex';
+        document.getElementById('start-button').addEventListener('click', () => {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
             loadQuestion();
-        };
+        });
 
-        speedControl.onchange = () => {
-            wordAudio.playbackRate = parseFloat(speedControl.value);
-        };
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-        backButton.onclick = () => {
-            buttonSound.play();
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('word').textContent = question.word;
+            document.getElementById('word-audio').src = question.audio;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('options').innerHTML = '';
+            selectedOption = null;
+
+            const shuffledOptions = shuffle([...question.options]);
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => selectOption(option, question.correct);
+                document.getElementById('options').appendChild(button);
+            });
+
+            document.getElementById('back-button').disabled = currentQuestion === 0;
+            document.getElementById('next-button').disabled = currentQuestion === questions.length - 1 && selectedOption;
+        }
+
+        function selectOption(selected, correct) {
+            selectedOption = selected;
+            const feedback = document.getElementById('feedback');
+            if (selected === correct) {
+                feedback.textContent = 'CORRETO';
+                score++;
+                document.getElementById('win-audio').play();
+            } else {
+                feedback.textContent = 'INCORRETO';
+                document.getElementById('error-audio').play();
+            }
+            document.getElementById('next-button').disabled = false;
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('word-audio');
+            audio.play();
+        }
+
+        function changeSpeed() {
+            const audio = document.getElementById('word-audio');
+            audio.playbackRate = parseFloat(document.getElementById('speed-control').value);
+        }
+
+        function playButtonSound() {
+            document.getElementById('button-audio').play();
+        }
+
+        function prevQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
                 loadQuestion();
-                answered = false;
-                feedbackDiv.textContent = '';
             }
-        };
-
-        nextButton.onclick = () => {
-            buttonSound.play();
-            if (!answered) return;
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-                answered = false;
-                feedbackDiv.textContent = '';
-            } else {
-                showResults();
-            }
-        };
-
-        function loadQuestion() {
-            const q = questions[currentQuestion];
-            wordAudio.src = q.audio;
-            wordAudio.playbackRate = parseFloat(speedControl.value);
-            frenchWord.textContent = q.word;
-            optionsDiv.innerHTML = '';
-            const shuffledOptions = q.options.sort(() => Math.random() - 0.5);
-            shuffledOptions.forEach(option => {
-                const div = document.createElement('div');
-                div.className = 'option';
-                div.textContent = option;
-                div.onclick = () => checkAnswer(option, q.correct);
-                optionsDiv.appendChild(div);
-            });
         }
 
-        function checkAnswer(selected, correct) {
-            if (answered) return;
-            answered = true;
-            if (selected === correct) {
-                score++;
-                feedbackDiv.textContent = 'CORRETO';
-                feedbackDiv.className = '';
-                winSound.play();
-            } else {
-                feedbackDiv.textContent = 'INCORRETO';
-                feedbackDiv.className = 'incorrect';
-                errorSound.play();
+        function nextQuestion() {
+            if (selectedOption || currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
             }
         }
 
         function showResults() {
-            quizContainer.style.display = 'none';
-            resultContainer.style.display = 'flex';
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+
             const percentage = (score / questions.length) * 100;
-            let title, text, mascot, sound;
+            let title, text, mascot, audio;
 
             if (percentage >= 95) {
                 title = 'EXCELENTE';
                 text = `Você acertou ${score}, continue assim, um excelente resultado`;
                 mascot = 'MASCOTEFELIZ.png';
-                sound = positiveSound;
+                audio = 'positivo-audio';
             } else if (percentage >= 75) {
                 title = 'PARABÉNS';
                 text = `Você acertou ${score}, continue assim, um bom resultado`;
                 mascot = 'MASCOTEALEGRE.png';
-                sound = positiveSound;
+                audio = 'positivo-audio';
             } else if (percentage >= 60) {
                 title = 'QUASE LÁ';
                 text = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
                 mascot = 'MASCOTEDUVIDA.png';
-                sound = negativeSound;
+                audio = 'negativo-audio';
             } else {
                 title = 'NÃO FOI DESSA VEZ';
                 text = `Você acertou ${score}, um resultado abaixo do esperado`;
                 mascot = 'MASCOTEDUVIDA.png';
-                sound = negativeSound;
+                audio = 'negativo-audio';
             }
 
-            resultTitle.textContent = title;
-            resultText.textContent = text;
-            resultMascot.src = mascot;
-            sound.play();
+            document.getElementById('result-title').textContent = title;
+            document.getElementById('result-text').textContent = text;
+            document.getElementById('result-mascot').src = mascot;
+            document.getElementById(audio).play();
         }
-
-        loadQuestion();
     </script>
 </body>
 </html>
