@@ -4,27 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprenda Francês</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Rockwell&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Franklin+Gothic+Demi&family=Rockwell&family=Poppins&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            font-display: swap;
         }
 
         body {
             overflow-x: hidden;
         }
 
-        /* Página de Introdução */
-        #intro-page {
+        /* Page 1 - Intro */
+        #page1 {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background-color: #062250;
             display: flex;
             justify-content: center;
@@ -32,27 +31,27 @@
             z-index: 1000;
         }
 
-        #intro-video {
-            width: 60%;
-            max-width: 800px;
-            max-height: 60%;
+        #introVideo {
+            max-width: 80%;
+            max-height: 80%;
             opacity: 1;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 1s ease-out;
         }
 
-        /* Página 02 - Início */
-        #start-page {
+        /* Page 2 - Start Screen */
+        #page2 {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #F1E1AC;
             padding: 20px;
+            text-align: center;
         }
 
-        #mascot-neutral {
-            width: 250px;
+        #mascotNeutro {
+            width: 200px;
             margin-bottom: 40px;
         }
 
@@ -61,24 +60,22 @@
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 15px 40px;
-            font-size: 1.8rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
+            padding: 15px 30px;
+            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
 
         .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
         }
 
-        /* Página do Exercício */
-        #exercise-page {
+        /* Page 3 - Quiz */
+        #page3 {
             display: none;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
             background-color: #F1E1AC;
@@ -93,124 +90,108 @@
             width: 100px;
         }
 
-        .exercise-container {
+        .quiz-container {
             background-color: #002F6C;
             border-radius: 20px;
-            width: min(90%, 800px);
-            padding: 2rem;
-            margin-top: 5rem;
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
             position: relative;
+            margin-bottom: 30px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .question-header {
             background-color: #C8102E;
-            color: white;
             border-radius: 50px;
-            padding: 15px 30px;
-            font-family: 'Rockwell', serif;
-            text-align: center;
+            padding: 15px;
             margin-top: -40px;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            line-height: 1.4;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .french-word {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 2.8rem;
-            text-align: center;
-            margin: 20px 0;
-            color: black;
-            background-color: #F4F1EC;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 2px solid #10C894;
+        .question-header h2 {
+            color: white;
+            font-family: 'Rockwell', serif;
+            font-size: 1.2rem;
         }
 
         .audio-controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
-            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .audio-btn {
-            background-color: #3B8C59;
-            color: white;
+        .audio-controls button {
+            background-color: #F5C84C;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.2s;
-        }
-
-        .audio-btn:hover {
-            transform: scale(1.1);
         }
 
         .speed-control {
+            margin-left: 20px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            background-color: #F4F1EC;
-            padding: 5px 10px;
-            border-radius: 20px;
         }
 
-        .speed-control button {
-            background-color: #002F6C;
+        .speed-control label {
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
+            margin-right: 10px;
         }
 
-        .speed-control button[aria-pressed="true"] {
-            background-color: #3B8C59;
+        .french-word {
+            font-family: 'Franklin Gothic Heavy', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin: 20px 0;
+            color: black;
+            background-color: #F4F1EC;
+            padding: 10px;
+            border-radius: 10px;
         }
 
         .options-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin: 30px 0;
+            margin-bottom: 20px;
         }
 
-        .option-btn {
+        @media (max-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option {
             background-color: #F4F1EC;
-            border: 2px solid #002F6C;
+            border: none;
             border-radius: 10px;
             padding: 15px;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            font-size: 1rem;
             text-align: center;
-            color: black;
         }
 
-        .option-btn:hover {
+        .option:hover {
             background-color: #C6B9DD;
-            transform: translateY(-3px);
         }
 
         .feedback {
             text-align: center;
+            font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 1.5rem;
-            font-weight: bold;
             margin: 20px 0;
-            height: 30px;
+            height: 40px;
         }
 
         .correct {
@@ -221,71 +202,66 @@
             color: #C8102E;
         }
 
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 30px;
+        .mascotNinho {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 100px;
         }
 
-        .nav-btn {
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-button {
             background-color: #002F6C;
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 10px 20px;
-            font-family: 'Poppins', sans-serif;
+            padding: 10px 25px;
+            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-size: 1rem;
             cursor: pointer;
             transition: transform 0.2s;
         }
 
-        .nav-btn:hover {
-            transform: translateY(-3px);
+        .nav-button:hover {
+            transform: scale(1.05);
         }
 
-        .nav-btn:disabled {
-            background-color: #666;
-            cursor: not-allowed;
-        }
-
-        .mascot-small {
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            width: 80px;
-        }
-
-        /* Página de Resultados */
-        .result-container {
+        /* Results Page */
+        .results-container {
             background-color: #C8102E;
             border-radius: 20px;
             padding: 30px;
+            width: 90%;
+            max-width: 600px;
             text-align: center;
             color: white;
-            margin: 50px auto;
-            max-width: 800px;
-            width: min(90%, 800px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
         }
 
-        .result-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 2.5rem;
+        .results-title {
+            font-family: 'Franklin Gothic Demi', sans-serif;
+            font-size: 2rem;
             margin-bottom: 20px;
         }
 
-        .result-message {
+        .results-message {
+            font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
             margin-bottom: 30px;
         }
 
-        .result-mascot {
-            width: 250px;
-            margin-top: 20px;
+        .results-mascot {
+            width: 200px;
+            margin: 0 auto;
         }
 
-        /* Animações */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -295,514 +271,405 @@
             animation: fadeIn 0.5s ease-in;
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            #intro-video {
-                width: 80%;
-                max-height: 50%;
-            }
-            .start-button {
-                font-size: 1.5rem;
-                padding: 12px 30px;
-            }
-            .exercise-container {
-                padding: 1.5rem;
-                margin-top: 4rem;
-            }
-            .question-header {
-                font-size: 1rem;
-                padding: 12px 20px;
-            }
-            .french-word {
-                font-size: 2.2rem;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            #intro-video {
-                width: 90%;
-                max-height: 40%;
-            }
-            #mascot-neutral {
-                width: 200px;
-            }
-            .options-container {
-                grid-template-columns: 1fr;
-            }
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .nav-btn {
-                width: 100%;
-                padding: 0.75rem;
-            }
-            .exercise-container {
-                padding: 1rem;
-                margin-top: 3rem;
-            }
-            .mascot-small {
-                width: 60px;
-                bottom: -20px;
-                left: -20px;
-            }
-            .result-mascot {
-                width: 200px;
-            }
+        /* Hide elements */
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
-    <!-- Página de Introdução -->
-    <div id="intro-page">
-        <video id="intro-video" autoplay muted>
+    <!-- Page 1 - Intro Video -->
+    <div id="page1">
+        <video id="introVideo" autoplay muted>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
-            Seu navegador não suporta o elemento de vídeo.
+            Your browser does not support the video tag.
         </video>
-        <audio id="intro-audio" preload="auto">
-            <source src="SOMINTRO.mp3" type="audio/mp3">
-            Seu navegador não suporta o elemento de áudio.
-        </audio>
+        <audio id="introAudio" src="SOMINTRO.mp3"></audio>
     </div>
 
-    <!-- Página 02 - Início -->
-    <div id="start-page">
-        <img id="mascot-neutral" src="MASCOTENEUTRO.png" alt="Mascote neutro do curso">
-        <button id="start-exercise" class="start-button" aria-label="Iniciar exercício">INICIAR EXERCÍCIO</button>
+    <!-- Page 2 - Start Screen -->
+    <div id="page2">
+        <img id="mascotNeutro" src="MASCOTENEUTRO.png" alt="Mascote">
+        <button class="start-button" id="startButton">INICIAR EXERCÍCIO</button>
     </div>
 
-    <!-- Página do Exercício -->
-    <div id="exercise-page">
-        <img class="logo" src="LOGODAMIAO.png" alt="Logotipo do curso de francês">
-        
-        <div class="exercise-container">
+    <!-- Page 3 - Quiz -->
+    <div id="page3">
+        <img class="logo" src="LOGODAMIAO.png" alt="Logo">
+
+        <div class="quiz-container">
             <div class="question-header">
-                Escolha a alternativa que melhor traduz a seguinte palavra:
+                <h2>Escolha a alternativa que melhor traduz a seguinte palavra:</h2>
             </div>
-            
+
             <div class="audio-controls">
-                <button class="audio-btn" id="play-audio" aria-label="Reproduzir áudio da palavra">▶</button>
+                <button id="playButton">▶</button>
+                <button id="stopButton">■</button>
                 <div class="speed-control">
-                    <button id="slow-speed" aria-pressed="false">0.5x</button>
-                    <button id="normal-speed" aria-pressed="true">1x</button>
-                    <button id="fast-speed" aria-pressed="false">1.5x</button>
+                    <label for="speedSelect">Velocidade:</label>
+                    <select id="speedSelect">
+                        <option value="0.5">0.5x</option>
+                        <option value="0.75">0.75x</option>
+                        <option value="1" selected>1x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                    </select>
                 </div>
             </div>
-            
-            <div class="french-word" id="french-word">BONJOUR</div>
-            
-            <div class="options-container" id="options-container">
-                <!-- As opções serão geradas dinamicamente pelo JavaScript -->
-            </div>
-            
+
+            <div class="french-word" id="frenchWord"></div>
+
+            <div class="options-container" id="optionsContainer"></div>
+
             <div class="feedback" id="feedback"></div>
-            
-            <div class="navigation-buttons">
-                <button class="nav-btn" id="prev-btn" aria-label="Voltar para a questão anterior">VOLTAR</button>
-                <button class="nav-btn" id="next-btn" aria-label="Avançar para a próxima questão">AVANÇAR</button>
-            </div>
-            
-            <img class="mascot-small" src="MASCOTENINHO.png" alt="Mascote pequeno do curso">
+
+            <img class="mascotNinho" src="MASCOTENINHO.png" alt="Mascote">
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-button" id="backButton">VOLTAR</button>
+            <button class="nav-button" id="nextButton">AVANÇAR</button>
         </div>
     </div>
 
-    <!-- Página de Resultados -->
-    <div id="results-page" style="display: none;">
-        <div class="result-container">
-            <h1 class="result-title" id="result-title">EXCELENTE</h1>
-            <p class="result-message" id="result-message"></p>
-            <img class="result-mascot" id="result-mascot" src="MASCOTEFELIZ.png" alt="Mascote do curso">
+    <!-- Results Page (shown within quiz container) -->
+    <div id="resultsPage" class="hidden">
+        <div class="results-container">
+            <h1 class="results-title" id="resultsTitle"></h1>
+            <p class="results-message" id="resultsMessage"></p>
+            <img class="results-mascot" id="resultsMascot" src="" alt="Mascote">
         </div>
     </div>
 
-    <!-- Áudios -->
-    <audio id="win-sound" preload="auto">
-        <source src="WIN.wav" type="audio/wav">
-    </audio>
-    <audio id="error-sound" preload="auto">
-        <source src="ERROR.wav" type="audio/wav">
-    </audio>
-    <audio id="button-sound" preload="auto">
-        <source src="BUTTON.mp3" type="audio/mp3">
-    </audio>
-    <audio id="positive-sound" preload="auto">
-        <source src="POSITIVO.mp3" type="audio/mp3">
-    </audio>
-    <audio id="negative-sound" preload="auto">
-        <source src="NEGATIVO.mp3" type="audio/mp3">
-    </audio>
-    <audio id="current-audio" preload="auto">
-        <source src="" type="audio/mp3">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
+    <!-- Audio elements -->
+    <audio id="buttonSound" src="BUTTON.mp3"></audio>
+    <audio id="winSound" src="WIN.wav"></audio>
+    <audio id="errorSound" src="ERROR.wav"></audio>
+    <audio id="positiveSound" src="POSITIVO.mp3"></audio>
+    <audio id="negativeSound" src="NEGATIVO.mp3"></audio>
+    <audio id="currentAudio"></audio>
 
     <script>
-        // Dados das palavras em francês e suas traduções
-        const frenchWords = [
-            { french: "Bonjour", audio: "bonjour.mp3", correct: "Bom dia", incorrects: ["Boa noite", "Obrigado", "Tchau"] },
-            { french: "Salut", audio: "salut.mp3", correct: "Olá", incorrects: ["Obrigado", "Por favor", "De nada"] },
-            { french: "Merci", audio: "merci.mp3", correct: "Obrigado(a)", incorrects: ["Por favor", "Bom dia", "Tchau"] },
-            { french: "Coucou", audio: "coucou.mp3", correct: "Oi, Oie, Oizinho", incorrects: ["Bom dia", "Boa noite", "Até logo"] },
-            { french: "S'il te plaît", audio: "s'il te plaît.mp3", correct: "Por favor (uso informal)", incorrects: ["Por favor (uso formal)", "Obrigado", "De nada"] },
-            { french: "S'il vous plaît", audio: "s'il vous plaît.mp3", correct: "Por favor (uso formal)", incorrects: ["Por favor (uso informal)", "Obrigado", "De nada"] },
-            { french: "Pardon", audio: "pardon.mp3", correct: "Perdão. Desculpa", incorrects: ["Por favor", "Obrigado", "De nada"] },
-            { french: "De rien", audio: "de rien.mp3", correct: "De nada", incorrects: ["Por favor", "Obrigado", "Bom dia"] },
-            { french: "À bientôt", audio: "à bientôt.mp3", correct: "Até breve. Até logo", incorrects: ["Boa noite", "Bom dia", "Tchau"] },
-            { french: "Au revoir", audio: "au revoir.mp3", correct: "Tchau. Nos vemos!", incorrects: ["Bom dia", "Boa noite", "Até logo"] },
-            { french: "Bonne nuit", audio: "bonne nuit.mp3", correct: "Boa noite (despedida)", incorrects: ["Boa noite (cumprimento)", "Bom dia", "Boa tarde"] },
-            { french: "Bonne soirée", audio: "bonne soirée.mp3", correct: "Tenha uma boa noite", incorrects: ["Boa noite (despedida)", "Boa noite (cumprimento)", "Bom dia"] },
-            { french: "Bonsoir", audio: "bonsoir.mp3", correct: "Boa noite (cumprimento)", incorrects: ["Boa noite (despedida)", "Tenha uma boa noite", "Bom dia"] },
-            { french: "Bonne journée", audio: "bonne journée.mp3", correct: "Tenha um bom dia", incorrects: ["Bom dia", "Boa tarde", "Boa noite"] },
-            { french: "Bon après-midi", audio: "bon après midi.mp3", correct: "Boa tarde", incorrects: ["Bom dia", "Boa noite", "Tenha um bom dia"] },
-            { french: "Moi, c'est...", audio: "moi c'est.mp3", correct: "Eu sou (uso para se apresentar)", incorrects: ["Eu me chamo", "Meu nome é", "Este sou eu"] },
-            { french: "Je m'appelle...", audio: "je m'appelle.mp3", correct: "Eu me chamo", incorrects: ["Eu sou", "Meu nome é", "Este sou eu"] }
+        // Quiz data
+        const quizData = [
+            {
+                french: "Bonjour",
+                audio: "bonjour.m4a",
+                correct: "Bom dia",
+                options: ["Bom dia", "Boa noite", "Tchau", "Obrigado"]
+            },
+            {
+                french: "Salut",
+                audio: "salut.mp3",
+                correct: "Olá",
+                options: ["Olá", "Obrigado(a)", "Por favor", "Até logo"]
+            },
+            {
+                french: "Merci",
+                audio: "merci.mp3",
+                correct: "Obrigado(a)",
+                options: ["De nada", "Obrigado(a)", "Por favor", "Bom dia"]
+            },
+            {
+                french: "Coucou",
+                audio: "coucou.mp3",
+                correct: "Oi",
+                options: ["Tchau", "Oi", "Bom dia", "Boa noite"]
+            },
+            {
+                french: "S'il te plaît",
+                audio: "s'il te plaît.mp3",
+                correct: "Por favor (uso informal)",
+                options: ["Por favor (uso informal)", "Obrigado", "Desculpa", "De nada"]
+            },
+            {
+                french: "S'il vous plaît",
+                audio: "s'il vous plaît.mp3",
+                correct: "Por favor (uso formal)",
+                options: ["Por favor (uso formal)", "Por favor (uso informal)", "Obrigado", "De nada"]
+            },
+            {
+                french: "Pardon",
+                audio: "pardon.mp3",
+                correct: "Perdão. Desculpa",
+                options: ["Obrigado", "De nada", "Perdão. Desculpa", "Por favor"]
+            },
+            {
+                french: "De rien",
+                audio: "de rien.mp3",
+                correct: "De nada",
+                options: ["Obrigado", "De nada", "Por favor", "Desculpa"]
+            },
+            {
+                french: "À bientôt",
+                audio: "à bientôt.mp3",
+                correct: "Até breve. Até logo",
+                options: ["Bom dia", "Boa noite", "Até breve. Até logo", "Oi"]
+            },
+            {
+                french: "Au revoir",
+                audio: "au revoir.mp3",
+                correct: "Tchau. Nos vemos!",
+                options: ["Oi", "Bom dia", "Tchau. Nos vemos!", "Obrigado"]
+            },
+            {
+                french: "Bonne nuit",
+                audio: "bonne nuit.mp3",
+                correct: "Boa noite (despedida)",
+                options: ["Boa noite (despedida)", "Bom dia", "Boa tarde", "Oi"]
+            },
+            {
+                french: "Bonne soirée",
+                audio: "bonne soirée.mp3",
+                correct: "Tenha uma boa noite",
+                options: ["Boa noite", "Tenha uma boa noite", "Bom dia", "Boa tarde"]
+            },
+            {
+                french: "Bonsoir",
+                audio: "bonsoir.mp3",
+                correct: "Boa noite (cumprimento)",
+                options: ["Boa noite (cumprimento)", "Bom dia", "Boa tarde", "Tchau"]
+            },
+            {
+                french: "Bonne journée",
+                audio: "bonne journée.mp3",
+                correct: "Tenha um bom dia",
+                options: ["Bom dia", "Tenha um bom dia", "Boa noite", "Boa tarde"]
+            },
+            {
+                french: "Bon après-midi",
+                audio: "bon après midi.mp3",
+                correct: "Boa tarde",
+                options: ["Bom dia", "Boa noite", "Boa tarde", "Oi"]
+            },
+            {
+                french: "Moi, c'est...",
+                audio: "moi c'est.mp3",
+                correct: "Eu sou (uso para se apresentar)",
+                options: ["Eu me chamo", "Eu sou (uso para se apresentar)", "Oi", "Bom dia"]
+            },
+            {
+                french: "Je m'appelle...",
+                audio: "je m'apelle.mp3",
+                correct: "Eu me chamo",
+                options: ["Eu sou", "Eu me chamo", "Oi", "Bom dia"]
+            }
         ];
 
-        // Variáveis de estado
+        // DOM elements
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const introVideo = document.getElementById('introVideo');
+        const introAudio = document.getElementById('introAudio');
+        const startButton = document.getElementById('startButton');
+        const frenchWord = document.getElementById('frenchWord');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const backButton = document.getElementById('backButton');
+        const nextButton = document.getElementById('nextButton');
+        const playButton = document.getElementById('playButton');
+        const stopButton = document.getElementById('stopButton');
+        const speedSelect = document.getElementById('speedSelect');
+        const currentAudio = document.getElementById('currentAudio');
+        const buttonSound = document.getElementById('buttonSound');
+        const winSound = document.getElementById('winSound');
+        const errorSound = document.getElementById('errorSound');
+        const positiveSound = document.getElementById('positiveSound');
+        const negativeSound = document.getElementById('negativeSound');
+        const resultsPage = document.getElementById('resultsPage');
+        const resultsTitle = document.getElementById('resultsTitle');
+        const resultsMessage = document.getElementById('resultsMessage');
+        const resultsMascot = document.getElementById('resultsMascot');
+
+        // Quiz state
         let currentQuestion = 0;
         let score = 0;
-        let userAnswers = [];
-        let audioPlaybackRate = 1;
-        let isAudioInitialized = false;
+        let userAnswers = Array(quizData.length).fill(null);
+        let answered = false;
 
-        // Elementos DOM
-        const introPage = document.getElementById('intro-page');
-        const introVideo = document.getElementById('intro-video');
-        const introAudio = document.getElementById('intro-audio');
-        const startPage = document.getElementById('start-page');
-        const exercisePage = document.getElementById('exercise-page');
-        const resultsPage = document.getElementById('results-page');
-        const frenchWordElement = document.getElementById('french-word');
-        const optionsContainer = document.getElementById('options-container');
-        const feedbackElement = document.getElementById('feedback');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const playAudioBtn = document.getElementById('play-audio');
-        const currentAudio = document.getElementById('current-audio');
-        const slowSpeedBtn = document.getElementById('slow-speed');
-        const normalSpeedBtn = document.getElementById('normal-speed');
-        const fastSpeedBtn = document.getElementById('fast-speed');
-        const resultTitle = document.getElementById('result-title');
-        const resultMessage = document.getElementById('result-message');
-        const resultMascot = document.getElementById('result-mascot');
-
-        // Sons
-        const winSound = document.getElementById('win-sound');
-        const errorSound = document.getElementById('error-sound');
-        const buttonSound = document.getElementById('button-sound');
-        const positiveSound = document.getElementById('positive-sound');
-        const negativeSound = document.getElementById('negative-sound');
-
-        // Event Listeners
-        document.getElementById('start-exercise').addEventListener('click', startExercise);
-        prevBtn.addEventListener('click', goToPreviousQuestion);
-        nextBtn.addEventListener('click', goToNextQuestion);
-        playAudioBtn.addEventListener('click', playCurrentAudio);
-        slowSpeedBtn.addEventListener('click', () => setPlaybackSpeed(0.5));
-        normalSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1));
-        fastSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1.5));
-
-        // Desbloqueia áudio após interação do usuário
-        document.addEventListener('click', unlockAudio, { once: true });
-        document.addEventListener('keydown', unlockAudio, { once: true });
-
-        function unlockAudio() {
-            if (!isAudioInitialized) {
-                // Tenta carregar e reproduzir um áudio silencioso para desbloquear o contexto de áudio
-                const silentAudio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
-                silentAudio.play().catch(() => {});
-                isAudioInitialized = true;
-                // Tenta reproduzir áudio de introdução
-                if (introPage.style.display !== 'none') {
-                    introAudio.play().catch((error) => {
-                        console.error('Erro ao reproduzir áudio de introdução:', error);
-                        feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
-                        feedbackElement.className = 'feedback incorrect';
-                    });
-                }
-            }
-        }
-
-        // Sincronização de vídeo e áudio
-        introVideo.addEventListener('play', () => {
-            if (isAudioInitialized) {
-                introAudio.play().catch((error) => {
-                    console.error('Erro ao reproduzir áudio de introdução:', error);
-                    feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
-                    feedbackElement.className = 'feedback incorrect';
-                });
-            }
-        });
-
-        introVideo.addEventListener('ended', showStartPage);
-        introVideo.addEventListener('error', () => {
-            console.error('Erro ao carregar o vídeo de introdução');
-            feedbackElement.textContent = 'Erro ao carregar o vídeo de introdução.';
-            feedbackElement.className = 'feedback incorrect';
-            showStartPage();
-        });
-
-        introAudio.addEventListener('error', () => {
-            console.error('Erro ao carregar o áudio de introdução');
-            feedbackElement.textContent = 'Erro ao carregar o áudio de introdução.';
-            feedbackElement.className = 'feedback incorrect';
-        });
-
-        // Suporte a navegação por teclado
-        optionsContainer.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                const target = event.target;
-                if (target.classList.contains('option-btn')) {
-                    target.click();
-                }
-            }
-        });
-
-        // Função para embaralhar array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Mostra a página inicial
-        function showStartPage() {
-            introVideo.pause();
-            introAudio.pause();
-            introVideo.style.opacity = '0';
-            setTimeout(() => {
-                introPage.style.display = 'none';
-                startPage.style.display = 'flex';
-            }, 500);
-        }
-
-        // Reproduz som de botão
-        function playButtonSound() {
-            if (isAudioInitialized) {
-                buttonSound.currentTime = 0;
-                buttonSound.play().catch((error) => {
-                    console.error('Erro ao reproduzir som de botão:', error);
-                });
-            }
-        }
-
-        // Inicia o exercício
-        function startExercise() {
-            playButtonSound();
-            startPage.style.display = 'none';
-            exercisePage.style.display = 'flex';
+        // Initialize the quiz
+        function initQuiz() {
             loadQuestion(currentQuestion);
         }
 
-        // Carrega a questão atual
+        // Load a question
         function loadQuestion(index) {
-            if (index < 0 || index >= frenchWords.length) return;
+            if (index < 0 || index >= quizData.length) return;
 
-            const question = frenchWords[index];
-            frenchWordElement.textContent = question.french;
-            feedbackElement.textContent = '';
-            feedbackElement.className = 'feedback';
-
-            // Carrega o áudio
-            const audioSource = currentAudio.querySelector('source');
-            audioSource.src = question.audio;
-            currentAudio.load();
-            currentAudio.playbackRate = audioPlaybackRate;
-
-            currentAudio.addEventListener('error', () => {
-                feedbackElement.textContent = 'Erro ao carregar o áudio da palavra.';
-                feedbackElement.className = 'feedback incorrect';
-            }, { once: true });
-
-            // Tenta reproduzir o áudio automaticamente após interação do usuário
-            if (isAudioInitialized) {
-                currentAudio.play().catch((error) => {
-                    console.error('Erro ao reproduzir áudio da palavra:', error);
-                    feedbackElement.textContent = 'Clique no botão de reprodução para ouvir a palavra.';
-                    feedbackElement.className = 'feedback incorrect';
-                });
-            } else {
-                feedbackElement.textContent = 'Clique no botão de reprodução para ouvir a palavra.';
-                feedbackElement.className = 'feedback';
-            }
-
-            // Cria opções embaralhadas
-            const options = shuffleArray([question.correct, ...question.incorrects]);
+            currentQuestion = index;
+            const question = quizData[index];
             
+            // Reset state
+            answered = false;
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+            
+            // Set question
+            frenchWord.textContent = question.french;
+            currentAudio.src = question.audio;
+            currentAudio.load();
+            
+            // Shuffle options
+            const options = [...question.options];
+            if (!options.includes(question.correct)) {
+                options[Math.floor(Math.random() * options.length)] = question.correct;
+            }
+            
+            // Shuffle the options array
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            
+            // Create option buttons
             optionsContainer.innerHTML = '';
             options.forEach(option => {
-                const optionBtn = document.createElement('button');
-                optionBtn.className = 'option-btn slide-in';
-                optionBtn.textContent = option;
-                optionBtn.setAttribute('aria-label', `Opção: ${option}`);
-                optionBtn.addEventListener('click', () => checkAnswer(option, question.correct));
-                optionsContainer.appendChild(optionBtn);
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.addEventListener('click', () => selectAnswer(option, question.correct));
+                optionsContainer.appendChild(button);
             });
-
-            // Atualiza botões de navegação
-            prevBtn.disabled = index === 0;
-            nextBtn.disabled = userAnswers[index] === undefined;
-
-            // Adiciona animação
-            frenchWordElement.classList.add('fade-in');
-            optionsContainer.classList.add('fade-in');
-            setTimeout(() => {
-                frenchWordElement.classList.remove('fade-in');
-                optionsContainer.classList.remove('fade-in');
-            }, 500);
+            
+            // Update navigation buttons
+            backButton.disabled = index === 0;
+            nextButton.disabled = false;
+            nextButton.textContent = index === quizData.length - 1 ? 'VER RESULTADO' : 'AVANÇAR';
+            
+            // Play audio at default speed
+            currentAudio.playbackRate = 1;
+            speedSelect.value = '1';
         }
 
-        // Verifica a resposta
-        function checkAnswer(selectedOption, correctAnswer) {
-            if (userAnswers[currentQuestion] !== undefined) return; // Impede múltiplas respostas
+        // Handle answer selection
+        function selectAnswer(selected, correct) {
+            if (answered) return;
             
-            const isCorrect = selectedOption === correctAnswer;
-            userAnswers[currentQuestion] = isCorrect;
+            answered = true;
+            userAnswers[currentQuestion] = selected;
             
-            if (isCorrect) {
+            // Highlight selected answer
+            const options = optionsContainer.querySelectorAll('.option');
+            options.forEach(option => {
+                option.disabled = true;
+                if (option.textContent === selected) {
+                    option.style.backgroundColor = selected === correct ? '#3B8C59' : '#C8102E';
+                    option.style.color = 'white';
+                }
+                if (option.textContent === correct) {
+                    option.style.backgroundColor = '#3B8C59';
+                    option.style.color = 'white';
+                }
+            });
+            
+            // Show feedback
+            if (selected === correct) {
+                feedback.textContent = 'CORRETO';
+                feedback.className = 'feedback correct';
                 score++;
-                feedbackElement.textContent = 'CORRETO';
-                feedbackElement.className = 'feedback correct';
-                if (isAudioInitialized) {
-                    winSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som de acerto:', error);
-                    });
-                }
+                winSound.play();
             } else {
-                feedbackElement.textContent = 'INCORRETO';
-                feedbackElement.className = 'feedback incorrect';
-                if (isAudioInitialized) {
-                    errorSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som de erro:', error);
-                    });
-                }
-            }
-
-            // Desabilita todas as opções após responder
-            const optionButtons = document.querySelectorAll('.option-btn');
-            optionButtons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.textContent === correctAnswer) {
-                    btn.style.backgroundColor = '#3B8C59';
-                    btn.style.color = 'white';
-                } else if (btn.textContent === selectedOption && !isCorrect) {
-                    btn.style.backgroundColor = '#C8102E';
-                    btn.style.color = 'white';
-                }
-            });
-
-            nextBtn.disabled = false;
-        }
-
-        // Reproduz o áudio atual
-        function playCurrentAudio() {
-            if (isAudioInitialized) {
-                currentAudio.currentTime = 0;
-                currentAudio.play().catch((error) => {
-                    console.error('Erro ao reproduzir áudio:', error);
-                    feedbackElement.textContent = 'Erro ao reproduzir o áudio.';
-                    feedbackElement.className = 'feedback incorrect';
-                });
-            } else {
-                feedbackElement.textContent = 'Áudio não inicializado. Interaja com a página primeiro.';
-                feedbackElement.className = 'feedback incorrect';
+                feedback.textContent = 'INCORRETO';
+                feedback.className = 'feedback incorrect';
+                errorSound.play();
             }
         }
 
-        // Define a velocidade de reprodução
-        function setPlaybackSpeed(speed) {
-            audioPlaybackRate = speed;
-            currentAudio.playbackRate = speed;
+        // Navigation functions
+        function goToNextQuestion() {
+            buttonSound.play();
             
-            slowSpeedBtn.style.backgroundColor = speed === 0.5 ? '#3B8C59' : '#002F6C';
-            normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59 Eisenhower: none; transform: translateY(-3px); }
-            fastSpeedBtn.style.backgroundColor = speed === 1.5 ? '#3B8C59' : '#002F6C';
+            if (currentQuestion === quizData.length - 1) {
+                showResults();
+                return;
+            }
             
-            slowSpeedBtn.setAttribute('aria-pressed', speed === 0.5);
-            normalSpeedBtn.setAttribute('aria-pressed', speed === 1);
-            fastSpeedBtn.setAttribute('aria-pressed', speed === 1.5);
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion(currentQuestion);
+            }
         }
 
-        // Navega para a questão anterior
         function goToPreviousQuestion() {
-            playButtonSound();
+            buttonSound.play();
             if (currentQuestion > 0) {
                 currentQuestion--;
                 loadQuestion(currentQuestion);
             }
         }
 
-        // Navega para a próxima questão
-        function goToNextQuestion() {
-            playButtonSound();
-            if (currentQuestion < frenchWords.length - 1) {
-                currentQuestion++;
-                loadQuestion(currentQuestion);
-            } else {
-                showResults();
-            }
-        }
-
-        // Mostra os resultados
+        // Show results
         function showResults() {
-            exercisePage.style.display = 'none';
-            resultsPage.style.display = 'flex';
-            
-            const percentage = (score / frenchWords.length) * 100;
+            const percentage = Math.round((score / quizData.length) * 100);
             
             if (percentage >= 95) {
-                resultTitle.textContent = 'EXCELENTE';
-                resultMessage.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
-                resultMascot.src = 'MASCOTEFELIZ.png';
-                if (isAudioInitialized) {
-                    positiveSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som positivo:', error);
-                    });
-                }
+                resultsTitle.textContent = 'EXCELENTE';
+                resultsMessage.textContent = `Você acertou ${score} de ${quizData.length}, continue assim, um excelente resultado`;
+                resultsMascot.src = 'MASCOTEFELIZ.png';
+                positiveSound.play();
             } else if (percentage >= 75) {
-                resultTitle.textContent = 'PARABÉNS';
-                resultMessage.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
-                resultMascot.src = 'MASCOTEALEGRE.png';
-                if (isAudioInitialized) {
-                    positiveSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som positivo:', error);
-                    });
-                }
+                resultsTitle.textContent = 'PARABÉNS';
+                resultsMessage.textContent = `Você acertou ${score} de ${quizData.length}, continue assim, um bom resultado`;
+                resultsMascot.src = 'MASCOTEALEGRE.png';
+                positiveSound.play();
             } else if (percentage >= 60) {
-                resultTitle.textContent = 'QUASE LÁ';
-                resultMessage.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
-                resultMascot.src = 'MASCOTEDUVIDA.png';
-                if (isAudioInitialized) {
-                    negativeSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som negativo:', error);
-                    });
-                }
+                resultsTitle.textContent = 'QUASE LÁ';
+                resultsMessage.textContent = `Você acertou ${score} de ${quizData.length}, não é um resultado ruim, mas também não é um bom resultado`;
+                resultsMascot.src = 'MASCOTEDUVIDA.png';
+                negativeSound.play();
             } else {
-                resultTitle.textContent = 'NÃO FOI DESSA VEZ';
-                resultMessage.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
-                resultMascot.src = 'MASCOTEDUVIDA.png';
-                if (isAudioInitialized) {
-                    negativeSound.play().catch((error) => {
-                        console.error('Erro ao reproduzir som negativo:', error);
-                    });
-                }
+                resultsTitle.textContent = 'NÃO FOI DESSA VEZ';
+                resultsMessage.textContent = `Você acertou ${score} de ${quizData.length}, um resultado abaixo do esperado`;
+                resultsMascot.src = 'MASCOTEDUVIDA.png';
+                negativeSound.play();
             }
+            
+            page3.classList.add('hidden');
+            resultsPage.classList.remove('hidden');
         }
 
-        // Inicializa a velocidade de reprodução
-        setPlaybackSpeed(1);
+        // Event listeners
+        introVideo.addEventListener('ended', () => {
+            introVideo.style.opacity = '0';
+            setTimeout(() => {
+                page1.style.display = 'none';
+                page2.style.display = 'flex';
+                page2.classList.add('fade-in');
+            }, 1000);
+        });
+
+        startButton.addEventListener('click', () => {
+            buttonSound.play();
+            page2.style.display = 'none';
+            page3.style.display = 'flex';
+            page3.classList.add('fade-in');
+            initQuiz();
+        });
+
+        backButton.addEventListener('click', goToPreviousQuestion);
+        nextButton.addEventListener('click', goToNextQuestion);
+
+        playButton.addEventListener('click', () => {
+            buttonSound.play();
+            currentAudio.play();
+        });
+
+        stopButton.addEventListener('click', () => {
+            buttonSound.play();
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        });
+
+        speedSelect.addEventListener('change', () => {
+            currentAudio.playbackRate = parseFloat(speedSelect.value);
+        });
+
+        // Start the intro video with audio
+        document.addEventListener('DOMContentLoaded', () => {
+            introVideo.play();
+            introAudio.play();
+        });
     </script>
 </body>
 </html>
