@@ -27,21 +27,17 @@
             height: 100%;
             background-color: #062250;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
         #intro-video {
-            max-width: 80%;
-            max-height: 80%;
+            width: 60%;
+            max-width: 800px;
+            max-height: 60%;
             opacity: 1;
             transition: opacity 0.5s ease-out;
-        }
-
-        #skip-intro {
-            margin-top: 20px;
         }
 
         /* Página 02 - Início */
@@ -56,7 +52,7 @@
         }
 
         #mascot-neutral {
-            width: 200px;
+            width: 250px;
             margin-bottom: 40px;
         }
 
@@ -65,8 +61,9 @@
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 15px 30px;
-            font-size: 1.5rem;
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            font-family: 'Franklin Gothic Demi', sans-serif;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -99,7 +96,7 @@
             background-color: #002F6C;
             border-radius: 20px;
             width: min(90%, 800px);
-            padding: 1.5rem;
+            padding: 2rem;
             margin-top: 5rem;
             position: relative;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -115,17 +112,20 @@
             margin-top: -40px;
             margin-bottom: 30px;
             font-size: 1.2rem;
+            line-height: 1.4;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .french-word {
-            font-size: 2.5rem;
+            font-family: 'Franklin Gothic Heavy', sans-serif;
+            font-size: 2.8rem;
             text-align: center;
             margin: 20px 0;
             color: black;
             background-color: #F4F1EC;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .audio-controls {
@@ -185,24 +185,6 @@
             margin: 30px 0;
         }
 
-        @media (max-width: 600px) {
-            .options-container {
-                grid-template-columns: 1fr;
-            }
-            .exercise-container {
-                padding: 1rem;
-                margin-top: 3rem;
-            }
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .nav-btn {
-                width: 100%;
-                padding: 0.75rem;
-            }
-        }
-
         .option-btn {
             background-color: #F4F1EC;
             border: 2px solid #002F6C;
@@ -212,6 +194,7 @@
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
+            color: black;
         }
 
         .option-btn:hover {
@@ -248,6 +231,7 @@
             border: none;
             border-radius: 50px;
             padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: transform 0.2s;
         }
@@ -265,7 +249,7 @@
             position: absolute;
             bottom: -30px;
             left: -30px;
-            width: 100px;
+            width: 80px;
         }
 
         /* Página de Resultados */
@@ -275,11 +259,14 @@
             padding: 30px;
             text-align: center;
             color: white;
-            margin-top: 50px;
+            margin: 50px auto;
+            max-width: 800px;
+            width: min(90%, 800px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .result-title {
+            font-family: 'Franklin Gothic Demi', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
@@ -290,7 +277,7 @@
         }
 
         .result-mascot {
-            width: 200px;
+            width: 250px;
             margin-top: 20px;
         }
 
@@ -312,6 +299,63 @@
         .slide-in {
             animation: slideIn 0.3s ease-out;
         }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            #intro-video {
+                width: 80%;
+                max-height: 50%;
+            }
+            .start-button {
+                font-size: 1.5rem;
+                padding: 12px 30px;
+            }
+            .exercise-container {
+                padding: 1.5rem;
+                margin-top: 4rem;
+            }
+            .question-header {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+            .french-word {
+                font-size: 2.2rem;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #intro-video {
+                width: 90%;
+                max-height: 40%;
+            }
+            #mascot-neutral {
+                width: 200px;
+            }
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-btn {
+                width: 100%;
+                padding: 0.75rem;
+            }
+            .exercise-container {
+                padding: 1rem;
+                margin-top: 3rem;
+            }
+            .mascot-small {
+                width: 60px;
+                bottom: -20px;
+                left: -20px;
+            }
+            .result-mascot {
+                width: 200px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -319,11 +363,9 @@
     <div id="intro-page">
         <video id="intro-video" autoplay muted>
             <source src="VIDEOINTRO.mp4" type="video/mp4">
-            <track kind="captions" src="captions.vtt" srclang="pt-BR" label="Português">
             Seu navegador não suporta o elemento de vídeo.
         </video>
-        <button id="skip-intro" class="start-button" aria-label="Pular introdução">Pular Introdução</button>
-        <audio id="intro-audio" preload="auto">
+        <audio id="intro-audio" autoplay preload="auto">
             <source src="SOMINTRO.mp3" type="audio/mp3">
             Seu navegador não suporta o elemento de áudio.
         </audio>
@@ -375,8 +417,7 @@
         <div class="result-container">
             <h1 class="result-title" id="result-title">EXCELENTE</h1>
             <p class="result-message" id="result-message"></p>
-            <button id="restart-exercise" class="start-button" aria-label="Reiniciar exercício">Reiniciar Exercício</button>
-            <img class="result-mascot" id="result-mascot" src="MASCOTEFELIZ.png" alt="Mascote feliz do curso">
+            <img class="result-mascot" id="result-mascot" src="MASCOTEFELIZ.png" alt="Mascote do curso">
         </div>
     </div>
 
@@ -388,7 +429,6 @@
     <audio id="negative-sound" src="NEGATIVO.mp3"></audio>
     <audio id="current-audio">
         <source src="" type="audio/mp3">
-        <source src="" type="audio/mp4">
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
@@ -410,7 +450,7 @@
             { french: "Bonsoir", audio: "bonsoir.mp3", correct: "Boa noite (cumprimento)", incorrects: ["Boa noite (despedida)", "Tenha uma boa noite", "Bom dia"] },
             { french: "Bonne journée", audio: "bonne journée.mp3", correct: "Tenha um bom dia", incorrects: ["Bom dia", "Boa tarde", "Boa noite"] },
             { french: "Bon après-midi", audio: "bon après midi.mp3", correct: "Boa tarde", incorrects: ["Bom dia", "Boa noite", "Tenha um bom dia"] },
-            { french: "Moi, c'est...", audio: "moi c'est.mp3", correct: "Eu sou (uso para se apresentar)", incorrects: ["Eu me chamo", "Meu nome é", "Este sou eu"] },
+            { french: "Moi, c'est...", audio: "moi c'est.mp Stone3", correct: "Eu sou (uso para se apresentar)", incorrects: ["Eu me chamo", "Meu nome é", "Este sou eu"] },
             { french: "Je m'appelle...", audio: "je m'apelle.mp3", correct: "Eu me chamo", incorrects: ["Eu sou", "Meu nome é", "Este sou eu"] }
         ];
 
@@ -450,18 +490,17 @@
 
         // Event Listeners
         document.getElementById('start-exercise').addEventListener('click', startExercise);
-        document.getElementById('skip-intro').addEventListener('click', showStartPage);
         prevBtn.addEventListener('click', goToPreviousQuestion);
         nextBtn.addEventListener('click', goToNextQuestion);
         playAudioBtn.addEventListener('click', playCurrentAudio);
         slowSpeedBtn.addEventListener('click', () => setPlaybackSpeed(0.5));
         normalSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1));
         fastSpeedBtn.addEventListener('click', () => setPlaybackSpeed(1.5));
-        document.getElementById('restart-exercise').addEventListener('click', restartExercise);
 
         // Sincronização de vídeo e áudio
         introVideo.addEventListener('play', () => {
             introAudio.play().catch(() => {
+                console.error('Erro ao reproduzir o áudio de introdução');
                 feedbackElement.textContent = 'Erro ao reproduzir o áudio de introdução.';
                 feedbackElement.className = 'feedback incorrect';
             });
@@ -533,9 +572,8 @@
             feedbackElement.className = 'feedback';
             
             // Carrega o áudio
-            const audioSources = currentAudio.querySelectorAll('source');
-            audioSources[0].src = question.audio;
-            audioSources[1].src = question.audio.replace('.mp3', '.m4a');
+            const audioSource = currentAudio.querySelector('source');
+            audioSource.src = question.audio;
             currentAudio.load();
             currentAudio.playbackRate = audioPlaybackRate;
             
@@ -563,7 +601,11 @@
             
             // Adiciona animação
             frenchWordElement.classList.add('fade-in');
-            setTimeout(() => frenchWordElement.classList.remove('fade-in'), 500);
+            optionsContainer.classList.add('fade-in');
+            setTimeout(() => {
+                frenchWordElement.classList.remove('fade-in');
+                optionsContainer.classList.remove('fade-in');
+            }, 500);
         }
 
         // Verifica a resposta
@@ -618,6 +660,8 @@
             normalSpeedBtn.style.backgroundColor = speed === 1 ? '#3B8C59' : '#002F6C';
             fastSpeedBtn.style.backgroundColor = speed === 1.5 ? '#3B8C59' : '#002F6C';
             
+            slowSpeedBtnਮ
+
             slowSpeedBtn.setAttribute('aria-pressed', speed === 0.5);
             normalSpeedBtn.setAttribute('aria-pressed', speed === 1);
             fastSpeedBtn.setAttribute('aria-pressed', speed === 1.5);
@@ -638,11 +682,8 @@
             if (currentQuestion < frenchWords.length - 1) {
                 currentQuestion++;
                 loadQuestion(currentQuestion);
-            } else if (userAnswers.length === frenchWords.length) {
-                showResults();
             } else {
-                feedbackElement.textContent = 'Por favor, responda todas as questões antes de continuar.';
-                feedbackElement.className = 'feedback incorrect';
+                showResults();
             }
         }
 
@@ -655,36 +696,25 @@
             
             if (percentage >= 95) {
                 resultTitle.textContent = 'EXCELENTE';
-                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}! Parabéns pelo desempenho excepcional!`;
+                resultMessage.textContent = `Você acertou ${score}, continue assim, um excelente resultado`;
                 resultMascot.src = 'MASCOTEFELIZ.png';
                 positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
             } else if (percentage >= 75) {
                 resultTitle.textContent = 'PARABÉNS';
-                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Bom trabalho, continue praticando!`;
+                resultMessage.textContent = `Você acertou ${score}, continue assim, um bom resultado`;
                 resultMascot.src = 'MASCOTEALEGRE.png';
                 positiveSound.play().catch(() => console.error('Erro ao reproduzir som positivo'));
             } else if (percentage >= 60) {
                 resultTitle.textContent = 'QUASE LÁ';
-                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Está no caminho certo, mas pode melhorar!`;
+                resultMessage.textContent = `Você acertou ${score}, não é um resultado ruim, mas também não é um bom resultado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
                 negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
             } else {
-                resultTitle.textContent = 'TENTE NOVAMENTE';
-                resultMessage.textContent = `Você acertou ${score} de ${frenchWords.length}. Que tal revisar e tentar de novo?`;
+                resultTitle.textContent = 'NÃO FOI DESSA VEZ';
+                resultMessage.textContent = `Você acertou ${score}, um resultado abaixo do esperado`;
                 resultMascot.src = 'MASCOTEDUVIDA.png';
                 negativeSound.play().catch(() => console.error('Erro ao reproduzir som negativo'));
             }
-        }
-
-        // Reinicia o exercício
-        function restartExercise() {
-            playButtonSound();
-            currentQuestion = 0;
-            score = 0;
-            userAnswers = [];
-            resultsPage.style.display = 'none';
-            exercisePage.style.display = 'flex';
-            loadQuestion(currentQuestion);
         }
 
         // Inicializa a velocidade de reprodução
